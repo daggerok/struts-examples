@@ -8,7 +8,7 @@ services:
     ports:
       - "8080:8080"
       - "9990:9990"
-    mem_limit: 524288000 # container limit: 500Mb (500 * 1024 * 1024)
+    mem_limit: 629145600 # container limit: 600Mb (600 * 1024 * 1024)
     networks: [backing-services]
     restart: unless-stopped
 

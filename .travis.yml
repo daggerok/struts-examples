@@ -14,18 +14,18 @@ install: true
 before_install:
   - wget get.docker.com -O- | sudo sh -
   - sudo usermod -aG docker $(whoami)
-  - sudo apt update
   - sudo apt -y install curl jq libxml2-utils python-pip
   - sudo pip install docker-compose httpie
   - source <(curl -fsSL https://raw.github.com/daggerok/bash-functions/master/main.bash)
   - stop_any 5432 5672 27017
 
 script:
-  - expor base=$(pwd)
+  - export base=$(pwd)
 
   # starter
   - cd ${base}/starter
-  - bash mvnw clean package
+  - bash gradlew
+  - bash mvnw
   - docker-compose build --force-rm --no-cache --pull
   - docker-compose up --force-recreate --remove-orphans &
   - sleep 30
