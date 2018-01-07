@@ -1,0 +1,20 @@
+version: "2.1"
+
+services:
+
+  webapp:
+    build: .
+    volumes: ["webapp-data:/home"]
+    ports:
+      - "8080:8080"
+      - "9990:9990"
+    mem_limit: 524288000 # container limit: 500Mb (500 * 1024 * 1024)
+    networks: [backing-services]
+    restart: unless-stopped
+
+volumes:
+  webapp-data: {}
+
+networks:
+  backing-services:
+    driver: bridge

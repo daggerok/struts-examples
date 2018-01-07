@@ -1,0 +1,24 @@
+allprojects {
+  apply plugin: "base"
+  apply plugin: "maven"
+
+  group = "daggerok"
+  version = "0.0.1"
+
+  defaultTasks "build"
+}
+
+subprojects {
+  apply plugin: "java"
+  sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+
+  repositories {
+    mavenLocal()
+
+    maven { url "http://repo.maven.apache.org/maven2" }
+  }
+
+  dependencies {
+    compileOnly "javax:javaee-api:7.0"
+  }
+}
