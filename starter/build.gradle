@@ -1,3 +1,9 @@
+buildscript {
+  ext {
+    slf4jVersion = "1.7.25"
+  }
+}
+
 allprojects {
   apply plugin: "base"
   apply plugin: "maven"
@@ -20,5 +26,9 @@ subprojects {
 
   dependencies {
     compileOnly "javax:javaee-api:7.0"
+    compile "org.slf4j:slf4j-api:$slf4jVersion",
+        "org.slf4j:jul-to-slf4j:$slf4jVersion",
+        "org.slf4j:log4j-over-slf4j:$slf4jVersion",
+        "ch.qos.logback:logback-classic:1.2.3"
   }
 }
