@@ -16,7 +16,7 @@ allprojects {
 
 subprojects {
   apply plugin: "java"
-  sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+  sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_7
 
   repositories {
     mavenLocal()
