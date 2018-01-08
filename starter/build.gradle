@@ -1,7 +1,12 @@
 buildscript {
   ext {
-    slf4jVersion = "1.7.25"
+    strutsVersion = "2.5.14.1"
+    log4jVersion = "2.10.0"
   }
+}
+
+plugins {
+  id "io.spring.dependency-management" version "1.0.4.RELEASE"
 }
 
 allprojects {
@@ -12,6 +17,13 @@ allprojects {
   version = "0.0.1"
 
   defaultTasks "build"
+
+  dependencyManagement {
+    imports {
+      mavenBom "org.apache.struts:struts2-bom:$strutsVersion"
+      mavenBom "org.apache.logging.log4j:log4j-bom:$strutsVersion"
+    }
+  }
 }
 
 subprojects {
@@ -26,9 +38,6 @@ subprojects {
 
   dependencies {
     compileOnly "javax:javaee-api:7.0"
-    compile "org.slf4j:slf4j-api:$slf4jVersion",
-        "org.slf4j:jul-to-slf4j:$slf4jVersion",
-        "org.slf4j:log4j-over-slf4j:$slf4jVersion",
-        "ch.qos.logback:logback-classic:1.2.3"
+    compileOnly "org.projectlombok:lombok:1.16.18"
   }
 }

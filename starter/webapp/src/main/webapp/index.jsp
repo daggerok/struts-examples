@@ -6,11 +6,16 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
   <title>web app</title>
 </head>
 <body>
-  <p>Hola-la, Struts 2!</p>
+<h3>Hola-la, Struts 2!</h3>
+<p>message: <s:property value="message"/></p>
+<footer>
+  <a href="./hello-action">./hello-action</a>
+</footer>
 </body>
 </html>

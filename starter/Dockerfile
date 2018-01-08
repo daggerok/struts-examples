@@ -14,4 +14,6 @@ ENV JAVA_OPTS="${JAVA_OPTS} \
 -Djava.net.preferIPv4Stack=true \
 -Djboss.modules.system.pkgs=org.jboss.byteman \
 -Djava.awt.headless=true"
-COPY --chown=jboss-eap-7.1 ./webapp/build/libs/*.war ${JBOSS_HOME}/standalone/deployments/
+RUN echo "JAVA_OPTS=\"\$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 \"" >> ${JBOSS_HOME}/bin/standalone.conf
+EXPOSE 5005
+COPY --chown=jboss-eap-7.1 ./webapp/target/*.war ${JBOSS_HOME}/standalone/deployments/
