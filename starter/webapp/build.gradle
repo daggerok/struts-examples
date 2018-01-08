@@ -10,7 +10,5 @@ dependencies {
   compile "org.apache.struts:struts2-core:$strutsVersion",
       "org.apache.struts:struts2-convention-plugin:$strutsVersion",
       "org.apache.logging.log4j:log4j-api:$log4jVersion",
-      "org.apache.logging.log4j:log4j-core:$log4jVersion",
-      "org.ow2.asm:asm:$asmVersion",
-      "org.ow2.asm:asm-commons:$asmVersion"
+      "org.apache.logging.log4j:log4j-core:$log4jVersion"
 }
