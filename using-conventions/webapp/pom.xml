@@ -34,12 +34,6 @@
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm-commons</artifactId>
       <version>${asm.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>asm</groupId>
-          <artifactId>spring-asm</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
