@@ -64,8 +64,19 @@ script:
 
   # starter
   - cd ${base}/starter
-  - bash gradlew clean build
-  - bash mvnw clean package
+  # gradle
+  - bash gradlew clean build jettyRun &
+  - wait_for 8080
+  - http :8080/webapp/
+  - http :8080/webapp/hello
+  - stop_any 8080
+  # gradle
+  - bash mvnw -pl webapp clean package jetty:run &
+  - wait_for 8080
+  - http :8080/webapp/
+  - http :8080/webapp/hello
+  - stop_any 8080
+  # docker
   - docker-compose build --force-rm --no-cache --pull
   - docker-compose up --force-recreate --remove-orphans &
   - sleep 30

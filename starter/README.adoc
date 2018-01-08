@@ -12,15 +12,24 @@ docker-compose down -v; ./gradlew; ./mvnw; docker-compose up --build --force-rec
 http :8080/webapp/
 ----
 
-.jetty
+.maven
 ----
 ./mvnw -pl webapp clean package jetty:run
 
 http :8080/webapp/
 ----
 
+.gradle
+----
+./gradlew clean build jettyRun # tomcatRun # jettyRunDebug
+
+http :8080/webapp/
+----
+
 links:
 
+. link:http://akhikhl.github.io/gretty-doc/Gretty-configuration.html[Gretty plugin]
+. link:http://akhikhl.github.io/gretty-doc/Debugger-support.html[Embedded debug]
 . link:https://www.eclipse.org/jetty/documentation/9.4.x/jetty-maven-plugin.html[Jetty maven plugin]
 . link: http://struts.apache.org/plugins/convention/[Struts convention]
 . link:http://struts.apache.org/getting-started/message-resource-files.html[Message resource files]
