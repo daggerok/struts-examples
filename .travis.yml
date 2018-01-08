@@ -22,10 +22,29 @@ before_install:
 script:
   - export base=$(pwd)
 
+  # result-conventions-and-fallback
+  - cd ${base}/result-conventions-and-fallback
+  # maven
+  - bash mvnw -pl webapp clean package jetty:run &
+  - wait_for 8080
+  - http :8080/webapp/
+  - http :8080/webapp/second-index
+  - http :8080/webapp/second-index/
+  - http :8080/webapp/blah/blah-blah
+  - stop_any 8080
+  # gradle docker
+  - bash gradlew clean build
+  - docker-compose build --force-rm --no-cache --pull
+  - docker-compose up --force-recreate --remove-orphans &
+  - sleep 30
+  - http :8080/webapp/
+  - http :8080/webapp/second-index
+  - http :8080/webapp/second-index/
+  - http :8080/webapp/blah/blah-blah
+  - docker-compose down -v
+
   # handle-user-date
   - cd ${base}/handle-user-date
-  # gradle
-  - bash gradlew clean build
   # maven
   - bash mvnw -pl webapp clean package jetty:run &
   - wait_for 8080
@@ -33,7 +52,8 @@ script:
   - http :8080/webapp/submit-data.action\?newData=two
   - http :8080/webapp/find-all
   - stop_any 8080
-  # docker
+  # gradle docker
+  - bash gradlew clean build
   - docker-compose build --force-rm --no-cache --pull
   - docker-compose up --force-recreate --remove-orphans &
   - sleep 30

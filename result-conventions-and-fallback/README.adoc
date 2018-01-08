@@ -1,0 +1,32 @@
+= struts-examples image:https://travis-ci.org/daggerok/struts-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/struts-examples"]
+//tag::content[]
+
+This repository contains examples for:
+
+. result conventions
+. fallback
+
+.test
+----
+http :8080/webapp/
+http :8080/webapp/second-index
+http :8080/webapp/second-index/
+http :8080/webapp/blah/blah-blah
+----
+
+.docker
+----
+docker-compose down -v; ./gradlew; docker-compose up --build --force-recreate --remove-orphans
+----
+
+.maven
+----
+./mvnw -pl webapp clean package jetty:run
+----
+
+.gradle
+----
+./gradlew clean build jettyRun # tomcatRun # jettyRunDebug
+----
+
+//end::content[]
