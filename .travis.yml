@@ -22,6 +22,31 @@ before_install:
 script:
   - export base=$(pwd)
 
+  # handle-user-date
+  - cd ${base}/handle-user-date
+  # gradle
+  - bash gradlew clean build jettyRun &
+  - wait_for 8080
+  - http :8080/webapp/find-all
+  - http :8080/webapp/submit-data.action\?newData=one
+  - http :8080/webapp/find-all
+  - stop_any 8080
+  # gradle
+  - bash mvnw -pl webapp clean package jetty:run &
+  - wait_for 8080
+  - http :8080/webapp/find-all
+  - http :8080/webapp/submit-data.action\?newData=two
+  - http :8080/webapp/find-all
+  - stop_any 8080
+  # docker
+  - docker-compose build --force-rm --no-cache --pull
+  - docker-compose up --force-recreate --remove-orphans &
+  - sleep 30
+  - http :8080/webapp/find-all
+  - http :8080/webapp/submit-data.action\?newData=three
+  - http :8080/webapp/find-all
+  - docker-compose down -v
+
   # using-conventions
   - cd ${base}/using-conventions
   - bash gradlew clean build

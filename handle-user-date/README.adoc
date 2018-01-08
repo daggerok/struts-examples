@@ -1,0 +1,20 @@
+= struts-examples image:https://travis-ci.org/daggerok/struts-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/struts-examples"]
+//tag::content[]
+
+This repository contains struts examples.
+
+Yes... Old shit technologies... Sometimes we also have to support them =\
+
+.submit
+----
+http :8080/webapp/submit-data.action\?newData=iuh
+----
+
+links:
+
+. link:http://akhikhl.github.io/gretty-doc/Gretty-configuration.html[Gretty plugin]
+. link:https://www.eclipse.org/jetty/documentation/9.4.x/jetty-maven-plugin.html[Jetty maven plugin]
+. link: http://struts.apache.org/plugins/convention/[Struts convention]
+. link:http://struts.apache.org/getting-started/message-resource-files.html[Message resource files]
+
+//end::content[]
