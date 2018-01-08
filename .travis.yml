@@ -89,8 +89,8 @@ script:
   - cd ${base}/message-source-files
   - bash mvnw -pl webapp clean package jetty:run &
   - wait_for 8080
-  - http :8080/
-  - http :8080/hello
+  - http :8080/webapp/
+  - http :8080/webapp/hello
   - stop_any 8080
 
   # struts2-angularjs-starter
