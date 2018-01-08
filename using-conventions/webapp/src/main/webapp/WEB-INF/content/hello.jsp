@@ -15,11 +15,11 @@
 </head>
 <body>
 <h3>Hola-la, Struts 2!</h3>
+<p>message: <s:property value="message"/></p>
 <footer>
-  <ul>
-    <li><a href="./hello">go to ./hello action</a></li>
-    <li><a href="./customers/list">go to ./customers/list action</a></li>
-  </ul>
+  <p>
+    <a href="./">go home</a>
+  </p>
 </footer>
 </body>
 </html>

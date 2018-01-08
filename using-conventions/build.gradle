@@ -7,11 +7,10 @@ buildscript {
 }
 
 plugins {
-  id "io.spring.dependency-management" version "1.0.4.RELEASE" apply false
+  id "io.spring.dependency-management" version "1.0.4.RELEASE"
 }
 
 allprojects {
-
   apply plugin: "base"
   apply plugin: "maven"
 
@@ -19,29 +18,27 @@ allprojects {
   version = "0.0.1"
 
   defaultTasks "clean", "build"
+
+  dependencyManagement {
+    imports {
+      mavenBom "org.apache.struts:struts2-bom:$strutsVersion"
+      mavenBom "org.apache.logging.log4j:log4j-bom:$strutsVersion"
+    }
+  }
 }
 
 subprojects {
-
   apply plugin: "java"
-  apply plugin: "io.spring.dependency-management"
-
   sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_7
 
   repositories {
     mavenLocal()
+
     maven { url "http://repo.maven.apache.org/maven2" }
   }
 
   dependencies {
     compileOnly "javax:javaee-api:7.0"
     compileOnly "org.projectlombok:lombok:1.16.18"
-  }
-
-  dependencyManagement {
-    imports {
-      mavenBom "org.apache.struts:struts2-bom:$strutsVersion"
-      mavenBom "org.apache.logging.log4j:log4j-bom:$log4jVersion"
-    }
   }
 }

@@ -22,6 +22,18 @@ before_install:
 script:
   - export base=$(pwd)
 
+  # using-conventions
+  - cd ${base}/using-conventions
+  - bash gradlew
+  - bash mvnw
+  - docker-compose build --force-rm --no-cache --pull
+  - docker-compose up --force-recreate --remove-orphans &
+  - sleep 30
+  - http :8080/webapp/
+  - http :8080/webapp/hello
+  - http :8080/webapp/customers/list
+  - docker-compose down -v
+
   # render-property-from-action
   - cd ${base}/render-property-from-action
   - bash gradlew
@@ -31,6 +43,17 @@ script:
   - sleep 30
   - http :8080/webapp/
   - http :8080/webapp/hello-action
+  - docker-compose down -v
+
+  # starter
+  - cd ${base}/starter
+  - bash gradlew
+  - bash mvnw
+  - docker-compose build --force-rm --no-cache --pull
+  - docker-compose up --force-recreate --remove-orphans &
+  - sleep 30
+  - http :8080/webapp/
+  - http :8080/webapp/hello
   - docker-compose down -v
 
 cache:

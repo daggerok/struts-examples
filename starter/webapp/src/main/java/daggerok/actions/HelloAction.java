@@ -1,4 +1,4 @@
-package daggerok;
+package daggerok.actions;
 
 import com.opensymphony.xwork2.Action;
 import lombok.Data;
