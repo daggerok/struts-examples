@@ -5,9 +5,12 @@ This repository contains struts examples.
 
 Yes... Old shit technologies... Sometimes we also have to support them =\
 
-link:./starter/[Starter project (JavaEE, maven, gradle, docker, JBOSS EAP 7.1)]
-link:./render-property-from-action/[Render model]
-link:./using-conventions/[Struts zero configuration (conventions) no struts.xml]
-link:./message-source-files/[Struts zero configuration (conventions) no struts.xml]
+. link:./starter/[Starter project (JavaEE, maven, gradle, docker, JBOSS EAP 7.1)]
+. link:./render-property-from-action/[Render model]
+. link:./using-conventions/[Struts zero configuration (conventions) no struts.xml]
+. link:./message-source-files/[Struts zero configuration (conventions) no struts.xml]
+. link:./struts2-angularjs-starter/[Struts 2 and AngularJS]
+. link:./handle-user-date/[Handle user inputs and data binding]
+. link:./result-conventions-and-fallback/[Result convention and Fallback]
 
 //end::content[]
