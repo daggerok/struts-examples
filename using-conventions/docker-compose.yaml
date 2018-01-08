@@ -9,9 +9,8 @@ services:
       - "5005:5005"
       - "8080:8080"
       - "9990:9990"
-    # mem_limit: 786432000 # container limit: 750Mb (750 * 1024 * 1024)
+    mem_limit: 786432000
     networks: [backing-services]
-    restart: unless-stopped
 
 volumes:
   webapp-data: {}

@@ -13,7 +13,7 @@ ENV JAVA_OPTS="${JAVA_OPTS} \
 -XX:MaxMetaspaceSize=256m \
 -Djava.net.preferIPv4Stack=true \
 -Djboss.modules.system.pkgs=org.jboss.byteman \
--Djava.awt.headless=true"
-RUN echo "JAVA_OPTS=\"\$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 \"" >> ${JBOSS_HOME}/bin/standalone.conf
+-Djava.awt.headless=true \
+-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
 EXPOSE 5005
 COPY --chown=jboss-eap-7.1 ./webapp/target/*.war ${JBOSS_HOME}/standalone/deployments/

@@ -24,8 +24,8 @@ script:
 
   # using-conventions
   - cd ${base}/using-conventions
-  - bash gradlew
-  - bash mvnw
+  - bash gradlew clean build
+  - bash mvnw clean package
   - docker-compose build --force-rm --no-cache --pull
   - docker-compose up --force-recreate --remove-orphans &
   - sleep 30
@@ -47,8 +47,8 @@ script:
 
   # starter
   - cd ${base}/starter
-  - bash gradlew
-  - bash mvnw
+  - bash gradlew clean build
+  - bash mvnw clean package
   - docker-compose build --force-rm --no-cache --pull
   - docker-compose up --force-recreate --remove-orphans &
   - sleep 30
