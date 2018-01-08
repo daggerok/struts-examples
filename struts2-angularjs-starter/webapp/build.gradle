@@ -1,0 +1,22 @@
+plugins {
+  id "war"
+}
+
+war {
+  archiveName = "${project.name}.war"
+}
+
+dependencies {
+  compile "org.apache.struts:struts2-core:$strutsVersion",
+      "org.apache.struts:struts2-convention-plugin:$strutsVersion",
+      "org.apache.struts:struts2-json-plugin:$strutsVersion",
+      "org.apache.struts:struts2-config-browser-plugin:$strutsVersion",
+      "org.apache.logging.log4j:log4j-api:$log4jVersion",
+      "org.apache.logging.log4j:log4j-core:$log4jVersion",
+      "org.ow2.asm:asm:$asmVersion",
+      "org.ow2.asm:asm-commons:$asmVersion"
+  providedCompile "javax.servlet:javax.servlet-api:3.1.0",
+      "javax.servlet:jsp-api:2.0"
+  testCompile "junit:junit:4.5",
+      "org.apache.struts:struts2-junit-plugin:$strutsVersion"
+}

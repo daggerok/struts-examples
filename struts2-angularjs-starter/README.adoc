@@ -1,0 +1,22 @@
+= struts-examples image:https://travis-ci.org/daggerok/struts-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/struts-examples"]
+//tag::content[]
+
+TODO: Gradle
+
+.build and run
+----
+docker-compose down -v; ./mvnw; docker-compose up --build --force-recreate --remove-orphans
+http :8080/webapp/
+http :8080/webapp/home
+http :8080/webapp/projects
+----
+
+.embedded jetty
+----
+./mvnw -f webapp/pom.xml clean package jetty:run
+http :8080/
+http :8080/home
+http :8080/projects
+----
+
+//end::content[]

@@ -1,7 +1,7 @@
 buildscript {
   ext {
     strutsVersion = "2.5.14.1"
-    log4jVersion = "2.10.0"
+    log4jVersion = "2.8.2"
   }
 }
 

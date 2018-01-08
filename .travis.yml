@@ -45,6 +45,15 @@ script:
   - http :8080/webapp/hello-action
   - docker-compose down -v
 
+  # struts2-angularjs-starter
+  - cd ${base}/struts2-angularjs-starter
+  - bash mvnw -f webapp/pom.xml clean package jetty:run &
+  - wait_for 8080
+  - http :8080/
+  - http :8080/home
+  - http :8080/projects
+  - stop_any 8080
+
   # starter
   - cd ${base}/starter
   - bash gradlew clean build
