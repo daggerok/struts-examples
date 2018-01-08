@@ -21,6 +21,7 @@ http :8080/webapp/
 
 links:
 
+. link:https://www.eclipse.org/jetty/documentation/9.4.x/jetty-maven-plugin.html[Jetty maven plugin]
 . link: http://struts.apache.org/plugins/convention/[Struts convention]
 . link:http://struts.apache.org/getting-started/message-resource-files.html[Message resource files]
 

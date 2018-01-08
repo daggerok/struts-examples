@@ -14,7 +14,7 @@ public class HelloAction extends ActionSupport {
   @Override
   public String execute() throws Exception {
     log.info("executed at: {}", new Date());
-    return "success";
+    return SUCCESS;
   }
 
   public String getMessage() {

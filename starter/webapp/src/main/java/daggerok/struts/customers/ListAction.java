@@ -16,6 +16,6 @@ public class ListAction implements Action {
   public String execute() throws Exception {
     log.info("now is: ${}", new Date());
     messageToCustomers = "list of customers....";
-    return "success";
+    return SUCCESS;
   }
 }
