@@ -1,0 +1,14 @@
+= struts-examples image:https://travis-ci.org/daggerok/struts-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/struts-examples"]
+//tag::content[]
+
+Render `message` property from `daggerok.HelloAction`
+
+.build and run
+----
+docker-compose down -v; ./gradlew; ./mvnw; docker-compose up --build --force-recreate --remove-orphans
+
+http :8080/webapp/
+http :8080/webapp/hello-action
+----
+
+//end::content[]

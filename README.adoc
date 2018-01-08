@@ -6,5 +6,6 @@ This repository contains struts examples.
 Yes... Old shit technologies... Sometimes we also have to support them =\
 
 link:./starter/[Starter project (JavaEE, maven, gradle, docker, JBOSS EAP 7.1)]
+link:./render-property-from-action/[Render model]
 
 //end::content[]

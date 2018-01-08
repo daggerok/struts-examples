@@ -1,0 +1,43 @@
+buildscript {
+  ext {
+    strutsVersion = "2.5.14.1"
+    log4jVersion = "2.10.0"
+  }
+}
+
+plugins {
+  id "io.spring.dependency-management" version "1.0.4.RELEASE"
+}
+
+allprojects {
+  apply plugin: "base"
+  apply plugin: "maven"
+
+  group = "daggerok"
+  version = "0.0.1"
+
+  defaultTasks "build"
+
+  dependencyManagement {
+    imports {
+      mavenBom "org.apache.struts:struts2-bom:$strutsVersion"
+      mavenBom "org.apache.logging.log4j:log4j-bom:$strutsVersion"
+    }
+  }
+}
+
+subprojects {
+  apply plugin: "java"
+  sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_7
+
+  repositories {
+    mavenLocal()
+
+    maven { url "http://repo.maven.apache.org/maven2" }
+  }
+
+  dependencies {
+    compileOnly "javax:javaee-api:7.0"
+    compileOnly "org.projectlombok:lombok:1.16.18"
+  }
+}

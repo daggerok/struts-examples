@@ -1,0 +1,13 @@
+plugins {
+  id "war"
+}
+
+war {
+  archiveName = "${project.name}.war"
+}
+
+dependencies {
+  compile "org.apache.struts:struts2-core:$strutsVersion",
+      "org.apache.logging.log4j:log4j-api:$log4jVersion",
+      "org.apache.logging.log4j:log4j-core:$log4jVersion"
+}

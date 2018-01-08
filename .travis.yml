@@ -22,14 +22,15 @@ before_install:
 script:
   - export base=$(pwd)
 
-  # starter
-  - cd ${base}/starter
+  # render-property-from-action
+  - cd ${base}/render-property-from-action
   - bash gradlew
   - bash mvnw
   - docker-compose build --force-rm --no-cache --pull
   - docker-compose up --force-recreate --remove-orphans &
   - sleep 30
   - http :8080/webapp/
+  - http :8080/webapp/hello-action
   - docker-compose down -v
 
 cache:
