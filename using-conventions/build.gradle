@@ -6,6 +6,10 @@ buildscript {
   }
 }
 
+plugins {
+  id "io.spring.dependency-management" version "1.0.4.RELEASE" apply false
+}
+
 allprojects {
 
   apply plugin: "base"
@@ -27,6 +31,15 @@ subprojects {
     mavenLocal()
 
     maven { url "http://repo.maven.apache.org/maven2" }
+  }
+
+  apply plugin: "io.spring.dependency-management"
+
+  dependencyManagement {
+    imports {
+      mavenBom "org.apache.struts:struts2-bom:$strutsVersion"
+      mavenBom "org.apache.logging.log4j:log4j-bom:$log4jVersion"
+    }
   }
 
   dependencies {
