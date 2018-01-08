@@ -20,9 +20,9 @@
   <s:property value="messageToCustomers"/>
 </p>
 <footer>
-  <p>
-    <a href="../">go home</a>
-  </p>
+  <ul>
+    <li><a href="../">home</a></li>
+  </ul>
 </footer>
 </body>
 </html>

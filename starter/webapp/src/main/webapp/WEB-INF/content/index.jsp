@@ -14,10 +14,9 @@
   <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
 </head>
 <body>
-<h3>Hola-la, Struts 2!</h3>
+<h3><s:property value="message" /></h3>
 <footer>
   <ul>
-    <li><a href="./hello">go to ./hello action</a></li>
     <li><a href="./customers/list">go to ./customers/list action</a></li>
   </ul>
 </footer>

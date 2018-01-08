@@ -10,6 +10,7 @@ Yes... Old shit technologies... Sometimes we also have to support them =\
 docker-compose down -v; ./gradlew; ./mvnw; docker-compose up --build --force-recreate --remove-orphans
 
 http :8080/webapp/
+http :8080/webapp/customers/list
 ----
 
 .maven

@@ -90,14 +90,14 @@ script:
   - bash mvnw -pl webapp clean package jetty:run &
   - wait_for 8080
   - http :8080/webapp/
-  - http :8080/webapp/hello
+  - http :8080/webapp/customers/list
   - stop_any 8080
   # docker
   - docker-compose build --force-rm --no-cache --pull
   - docker-compose up --force-recreate --remove-orphans &
   - sleep 30
   - http :8080/webapp/
-  - http :8080/webapp/hello
+  - http :8080/webapp/customers/list
   - docker-compose down -v
 
 cache:
