@@ -25,13 +25,8 @@ script:
   # handle-user-date
   - cd ${base}/handle-user-date
   # gradle
-  - bash gradlew clean build jettyRun &
-  - wait_for 8080
-  - http :8080/webapp/find-all
-  - http :8080/webapp/submit-data.action\?newData=one
-  - http :8080/webapp/find-all
-  - stop_any 8080
-  # gradle
+  - bash gradlew clean build
+  # maven
   - bash mvnw -pl webapp clean package jetty:run &
   - wait_for 8080
   - http :8080/webapp/find-all
@@ -90,12 +85,8 @@ script:
   # starter
   - cd ${base}/starter
   # gradle
-  - bash gradlew clean build jettyRun &
-  - wait_for 8080
-  - http :8080/webapp/
-  - http :8080/webapp/hello
-  - stop_any 8080
-  # gradle
+  - bash gradlew clean build
+  # maven
   - bash mvnw -pl webapp clean package jetty:run &
   - wait_for 8080
   - http :8080/webapp/
