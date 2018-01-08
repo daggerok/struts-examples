@@ -1,0 +1,27 @@
+= struts-examples image:https://travis-ci.org/daggerok/struts-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/struts-examples"]
+//tag::content[]
+
+This repository contains struts examples.
+
+Yes... Old shit technologies... Sometimes we also have to support them =\
+
+.docker
+----
+docker-compose down -v; ./gradlew; ./mvnw; docker-compose up --build --force-recreate --remove-orphans
+
+http :8080/webapp/
+----
+
+.jetty
+----
+./mvnw -pl webapp clean package jetty:run
+
+http :8080/webapp/
+----
+
+links:
+
+. link: http://struts.apache.org/plugins/convention/[Struts convention]
+. link:http://struts.apache.org/getting-started/message-resource-files.html[Message resource files]
+
+//end::content[]
