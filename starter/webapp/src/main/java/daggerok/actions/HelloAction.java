@@ -6,6 +6,14 @@ import lombok.val;
 
 import java.util.Date;
 
+/**
+ * ActionSupport provides:
+ * - implements Action
+ * - LocaleProvider
+ * - TextProvider (messages)
+ * - Validateable
+ * - ValidationAware
+ */
 @Log4j2
 public class HelloAction extends ActionSupport {
 
