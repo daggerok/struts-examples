@@ -22,6 +22,36 @@ before_install:
 script:
   - export base=$(pwd)
 
+  # struts2-freemarker-out-of-the-box
+  - cd ${base}/struts2-freemarker-out-of-the-box
+  # maven
+  - bash mvnw -pl webapp clean package jetty:run &
+  - wait_for 8080
+  - http :8080/webapp/
+  - stop_any 8080
+  # gradle docker
+  - bash gradlew clean build
+  - docker-compose build --force-rm --no-cache --pull
+  - docker-compose up --force-recreate --remove-orphans &
+  - sleep 30
+  - http :8080/webapp/
+  - docker-compose down -v
+
+  # struts2-velocity
+  - cd ${base}/struts2-velocity
+  # maven
+  - bash mvnw -pl webapp clean package jetty:run &
+  - wait_for 8080
+  - http :8080/webapp/
+  - stop_any 8080
+  # gradle docker
+  - bash gradlew clean build
+  - docker-compose build --force-rm --no-cache --pull
+  - docker-compose up --force-recreate --remove-orphans &
+  - sleep 30
+  - http :8080/webapp/
+  - docker-compose down -v
+
   # result-conventions-and-fallback
   - cd ${base}/result-conventions-and-fallback
   # maven
