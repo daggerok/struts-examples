@@ -4,7 +4,7 @@ plugins {
 }
 
 gretty {
-  servletContainer = "tomcat8"
+  servletContainer = "jetty7"
 }
 
 war {

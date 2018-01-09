@@ -4,9 +4,6 @@ plugins {
 }
 
 gretty {
-  // gradle appRunDebug
-  // jetty8 and jetty9 doesn't works, so use tomcat or jetty7
-  // servletContainer = "tomcat8"
   servletContainer = "jetty7"
 }
 
@@ -16,6 +13,8 @@ war {
 
 dependencies {
   compile "org.apache.struts:struts2-core:$strutsVersion",
+      "org.apache.struts:struts2-convention-plugin:$strutsVersion",
       "org.apache.logging.log4j:log4j-api:$log4jVersion",
-      "org.apache.logging.log4j:log4j-core:$log4jVersion"
+      "org.apache.logging.log4j:log4j-core:$log4jVersion",
+      "org.apache.velocity:velocity-tools:$velocityToolsVersion"
 }

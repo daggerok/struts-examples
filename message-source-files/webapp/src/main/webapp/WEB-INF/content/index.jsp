@@ -19,6 +19,7 @@
   <ul>
     <li><a href="${pageContext.request.contextPath}/hello">go to ${pageContext.request.contextPath}/hello action</a></li>
     <li><a href="${pageContext.request.contextPath}/customers/list">go to ${pageContext.request.contextPath}/customers/list action</a></li>
+    <li><a href="${pageContext.request.contextPath}">go home</a></li>
   </ul>
 </footer>
 </body>

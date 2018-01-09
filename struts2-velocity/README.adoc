@@ -1,0 +1,40 @@
+= struts-examples image:https://travis-ci.org/daggerok/struts-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/struts-examples"]
+//tag::content[]
+
+This repository contains struts examples.
+
+Yes... Old shit technologies... Sometimes we also have to support them =\
+
+.test
+----
+http :8080/webapp/
+----
+
+.docker
+----
+docker-compose down -v; ./gradlew; ./mvnw; docker-compose up --build --force-recreate --remove-orphans
+----
+
+.maven jetty
+----
+./mvnw -pl webapp clean package jetty:run
+----
+
+.gradle jetty / tomcat / debug
+----
+# chose container: setup gretty closure (jetty8, jetty9 doesn't works)
+gradle appRun # instead of jettyRun or tomcatRun
+
+# debug (defaut debug port: 5005)
+gradle appRunDebug appRun --parallel
+----
+
+links:
+
+. link:http://akhikhl.github.io/gretty-doc/Gretty-configuration.html[Gretty plugin]
+. link:http://akhikhl.github.io/gretty-doc/Debugger-support.html[Embedded debug]
+. link:https://www.eclipse.org/jetty/documentation/9.4.x/jetty-maven-plugin.html[Jetty maven plugin]
+. link: http://struts.apache.org/plugins/convention/[Struts convention]
+. link:http://struts.apache.org/getting-started/message-resource-files.html[Message resource files]
+
+//end::content[]

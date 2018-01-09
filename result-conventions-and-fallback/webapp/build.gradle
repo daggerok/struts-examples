@@ -3,6 +3,10 @@ plugins {
   id "org.akhikhl.gretty" version "2.0.0"
 }
 
+gretty {
+  servletContainer = "jetty7"
+}
+
 war {
   archiveName = "${project.name}.war"
 }
