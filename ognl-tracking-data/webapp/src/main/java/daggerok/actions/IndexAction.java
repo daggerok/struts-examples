@@ -18,7 +18,7 @@ public class IndexAction extends ActionSupport {
   TrackingData trackingData;
 
   @Override
-  @Action("")
+  @Action("/*")
   public String execute() throws Exception {
     trackingData = TrackingData.getInstance();
     trackingData.setTotal(latest + trackingData.getTotal());

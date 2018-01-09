@@ -22,7 +22,7 @@ public class IndexAction extends ActionSupport {
   TrackingData trackingData;
 
   @Override
-  @Action("")
+  @Action("/*")
   public String execute() throws Exception {
     trackingData.setTotal(latest + trackingData.getTotal());
     log.info("{}", Thread.currentThread());
