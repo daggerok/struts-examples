@@ -1,0 +1,8 @@
+= struts-examples image:https://travis-ci.org/daggerok/struts-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/struts-examples"]
+//tag::content[]
+
+This repository contains struts example: how to use Freemarker.
+
+We don't need to do anything more, -- freemarker is supported by struts out of the box.
+
+//end::content[]

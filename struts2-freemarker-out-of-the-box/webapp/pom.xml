@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>daggerok</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.0.1</version>
+  </parent>
+
+  <artifactId>webapp</artifactId>
+  <packaging>war</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-core</artifactId>
+      <version>${struts2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-convention-plugin</artifactId>
+      <version>${struts2.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${log4j2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j2.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.8.v20171121</version>
+        <configuration>
+          <stopKey>CTRL+C</stopKey>
+          <stopPort>8999</stopPort>
+          <scanIntervalSeconds>10</scanIntervalSeconds>
+          <webAppSourceDirectory>${basedir}/src/main/webapp/</webAppSourceDirectory>
+          <webAppConfig>
+            <contextPath>/webapp/</contextPath>
+            <descriptor>${basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
+          </webAppConfig>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
