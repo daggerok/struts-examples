@@ -1,0 +1,15 @@
+= result types
+
+.default result types
+----
+Chain
+Dispatcher (JSP)
+Freemarker
+Velocity
+HttpHeader
+Redirect
+RedirectAction
+Stream
+PlaintText
+Tiles
+----
