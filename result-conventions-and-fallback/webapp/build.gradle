@@ -15,8 +15,8 @@ dependencies {
 }
 
 gretty {
-  // "jetty7", "jetty8", "jetty9", "jetty93", "jetty94", "tomcat7", "tomcat8"
-  servletContainer = "jetty9"
+  // worked: "jetty7" or "tomcat7", "tomcat8" // these are not works: "jetty8", "jetty9", "jetty93", "jetty94"
+  servletContainer = "jetty7"
 
   //// normal run: jettyRun / tomcatRun
   // httpPort = 8080

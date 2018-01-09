@@ -10,15 +10,15 @@
 <html>
 <head>
   <title>web app</title>
-  <link rel="stylesheet" href="./styles.css">
-  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles.css">
+  <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <h3>Hola-la, Struts 2!</h3>
 <footer>
   <ul>
-    <li><a href="./hello">go to ./hello action</a></li>
-    <li><a href="./customers/list">go to ./customers/list action</a></li>
+    <li><a href="${pageContext.request.contextPath}/hello">go to ${pageContext.request.contextPath}/hello action</a></li>
+    <li><a href="${pageContext.request.contextPath}/customers/list">go to ${pageContext.request.contextPath}/customers/list action</a></li>
   </ul>
 </footer>
 </body>

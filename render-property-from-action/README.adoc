@@ -1,7 +1,17 @@
 = struts-examples image:https://travis-ci.org/daggerok/struts-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/struts-examples"]
 //tag::content[]
 
-Render `message` property from `daggerok.HelloAction`
+. Render `message` property from `daggerok.HelloAction`
+. + fallback using struts.xml config
+
+.gradle jetty / tomcat / debug
+----
+# chose container: setup gretty closure (jetty8, jetty9 doesn't works)
+gradle appRun # instead of jettyRun or tomcatRun
+
+# debug (defaut debug port: 5005)
+gradle appRunDebug appRun --parallel
+----
 
 .build and run
 ----

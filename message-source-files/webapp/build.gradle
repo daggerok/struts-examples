@@ -1,5 +1,10 @@
 plugins {
   id "war"
+  id "org.akhikhl.gretty" version "2.0.0"
+}
+
+gretty {
+  servletContainer = "tomcat8"
 }
 
 war {

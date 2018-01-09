@@ -1,5 +1,13 @@
 plugins {
   id "war"
+  id "org.akhikhl.gretty" version "2.0.0"
+}
+
+gretty {
+  // gradle appRunDebug
+  // jetty8 and jetty9 doesn't works, so use tomcat or jetty7
+  // servletContainer = "tomcat8"
+  servletContainer = "tomcat8"
 }
 
 war {

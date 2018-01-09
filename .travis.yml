@@ -76,6 +76,13 @@ script:
 
   # render-property-from-action
   - cd ${base}/render-property-from-action
+  # maven jetty plugin
+  - bash mvnw -pl webapp clean package jetty:run &
+  - wait_for 8080
+  - http :8080/webapp/
+  - http :8080/webapp/hello-action
+  - stop_any 8080
+  # docker
   - bash gradlew
   - bash mvnw
   - docker-compose build --force-rm --no-cache --pull

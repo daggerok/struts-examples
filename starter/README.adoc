@@ -5,26 +5,28 @@ This repository contains struts examples.
 
 Yes... Old shit technologies... Sometimes we also have to support them =\
 
+.test
+----
+http :8080/webapp/
+----
+
 .docker
 ----
 docker-compose down -v; ./gradlew; ./mvnw; docker-compose up --build --force-recreate --remove-orphans
-
-http :8080/webapp/
-http :8080/webapp/customers/list
 ----
 
-.maven
+.maven jetty
 ----
 ./mvnw -pl webapp clean package jetty:run
-
-http :8080/webapp/
 ----
 
-.gradle
+.gradle jetty / tomcat / debug
 ----
-./gradlew clean build jettyRun # tomcatRun # jettyRunDebug
+# chose container: setup gretty closure (jetty8, jetty9 doesn't works)
+gradle appRun # instead of jettyRun or tomcatRun
 
-http :8080/webapp/
+# debug (defaut debug port: 5005)
+gradle appRunDebug appRun --parallel
 ----
 
 links:

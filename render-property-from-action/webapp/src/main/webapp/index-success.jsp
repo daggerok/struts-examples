@@ -10,12 +10,10 @@
 <html>
 <head>
   <title>web app</title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles.css">
 </head>
 <body>
 <h3>Hola-la, Struts 2!</h3>
-<p>message: <s:property value="message"/></p>
-<footer>
-  <a href="./hello-action">./hello-action</a>
-</footer>
+<p>success message: <s:property value="message"/></p>
 </body>
 </html>

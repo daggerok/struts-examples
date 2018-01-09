@@ -8,10 +8,19 @@
 
   <!-- http://127.0.0.1/webapp/hello-action -->
   <package name="daggerok" extends="struts-default">
+    <action name="/*" class="daggerok.HelloAction">
+      <result name="success">/index-success.jsp</result>
+    </action>
+  </package>
+
+  <!-- http://127.0.0.1/webapp/hello-action -->
+  <!--
+  <package name="daggerok" extends="struts-default">
     <action name="hello-action" class="daggerok.HelloAction">
       <result name="success">/index.jsp</result>
     </action>
   </package>
+  -->
 
   <!-- http://127.0.0.1/webapp/my-path
     <package name="daggerok" extends="struts-default" namespace="/">

@@ -11,8 +11,8 @@
 <html>
 <head>
   <title>Customers list</title>
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles.css">
+  <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <p>
@@ -21,7 +21,7 @@
 </p>
 <footer>
   <p>
-    <a href="../">go home</a>
+    <a href="${pageContext.request.contextPath}/">go home</a>
   </p>
 </footer>
 </body>

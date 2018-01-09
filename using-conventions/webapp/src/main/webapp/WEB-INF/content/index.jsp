@@ -15,7 +15,6 @@
 </head>
 <body>
 <h3>Hola-la, Struts 2!</h3>
-<p>message: <s:property value="message"/></p>
 <footer>
   <ul>
     <li><a href="${pageContext.request.contextPath}">go home ${pageContext.request.contextPath}/</a></li>

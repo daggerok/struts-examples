@@ -11,8 +11,8 @@
 <html>
 <head>
   <title>Customers list</title>
-  <link rel="stylesheet" href="../styles.css">
-  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles.css">
+  <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <p>
@@ -20,9 +20,11 @@
   <s:property value="messageToCustomers"/>
 </p>
 <footer>
-  <p>
-    <a href="../">go home</a>
-  </p>
+  <ul>
+    <li><a href="${pageContext.request.contextPath}">go home ${pageContext.request.contextPath}/</a></li>
+    <li><a href="${pageContext.request.contextPath}/hello">go to ${pageContext.request.contextPath}/hello action</a></li>
+    <li><a href="${pageContext.request.contextPath}/customers/list">go to ${pageContext.request.contextPath}/customers/list action</a></li>
+  </ul>
 </footer>
 </body>
 </html>
