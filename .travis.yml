@@ -35,6 +35,7 @@ script:
   # struts2-freemarker-out-of-the-box, struts2-velocity
   - >
     for project in \
+      ognl-tracking-data \
       struts2-freemarker-out-of-the-box \
       struts2-velocity \
     ; do
