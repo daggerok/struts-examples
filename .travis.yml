@@ -22,6 +22,16 @@ before_install:
 script:
   - export base=$(pwd)
 
+  # ognl-cdi-tracking-data
+  - cd ${base}/ognl-cdi-tracking-data
+  - bash mvnw
+  - bash gradlew
+  - docker-compose build --force-rm --no-cache --pull
+  - docker-compose up --force-recreate --remove-orphans &
+  - sleep 30
+  - http :8080/webapp/
+  - docker-compose down -v
+
   # struts2-freemarker-out-of-the-box, struts2-velocity
   - >
     for project in \
