@@ -1,0 +1,21 @@
+plugins {
+  id "war"
+  id "org.akhikhl.gretty" version "2.0.0"
+}
+
+gretty {
+  servletContainer = "jetty7"
+}
+
+war {
+  archiveName = "${project.name}.war"
+}
+
+dependencies {
+  compile "org.apache.struts:struts2-core:$strutsVersion",
+      "org.apache.struts:struts2-convention-plugin:$strutsVersion",
+      "org.apache.struts:struts2-cdi-plugin:$strutsVersion",
+      "org.apache.logging.log4j:log4j-api:$log4jVersion",
+      "org.apache.logging.log4j:log4j-core:$log4jVersion"
+  providedCompile "javax.enterprise:cdi-api:1.0-SP1"
+}

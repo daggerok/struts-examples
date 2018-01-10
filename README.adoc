@@ -16,5 +16,6 @@ Yes... Old shit technologies... Sometimes we also have to support them =\
 . link:./struts2-freemarker-out-of-the-box/[Struts + Freemarker]
 . link:./ognl-tracking-data/[ONGL: tracking data]
 . link:./ognl-cdi-tracking-data/[ONGL + CDI (Java EE)]
+. link:./session-aware/[ONGL + Session]
 
 //end::content[]
