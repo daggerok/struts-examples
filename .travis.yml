@@ -32,11 +32,10 @@ script:
   - http :8080/webapp/
   - docker-compose down -v
 
-  # struts2-freemarker-out-of-the-box
-  # struts2-velocity
-  # session-aware
   - >
     for project in \
+      array-map-list-mapping \
+      ognl-call-method \
       session-aware \
       ognl-tracking-data \
       struts2-freemarker-out-of-the-box \

@@ -1,0 +1,20 @@
+= struts-examples image:https://travis-ci.org/daggerok/struts-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/struts-examples"]
+//tag::content[]
+
+This repository contains struts ONGL + CDI example: require Java EE runtime
+
+.
+----
+http :8080/webapp/
+----
+
+.docker
+----
+docker-compose down -v; ./gradlew; ./mvnw; docker-compose up --build --force-recreate --remove-orphans
+----
+
+links:
+
+. link:http://struts.apache.org/plugins/cdi/[Message resource files]
+
+//end::content[]
