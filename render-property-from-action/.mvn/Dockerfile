@@ -1,4 +1,4 @@
-FROM daggerok/jboss-eap-7.1
+FROM daggerok/jboss:eap-7.1
 HEALTHCHECK --timeout=3s \
             --retries=33 \
             CMD wget -q --spider http://127.0.0.1:8080/webapp/ || exit 1
