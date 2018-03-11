@@ -1,168 +1,165 @@
-sudo: required
-group: travis_lts
-
+service:
+- docker
 env:
   global:
-    TERM=dumb
-
+  - TERM=dumb
 language: java
 jdk:
-  - openjdk8
-  - oraclejdk8
-
+- openjdk8
+- oraclejdk8
 install: true
 before_install:
-  - wget get.docker.com -O- | sudo sh -
-  - sudo usermod -aG docker $(whoami)
-  - sudo apt -y install curl jq libxml2-utils python-pip
-  - sudo pip install docker-compose httpie
-  - source <(curl -fsSL https://raw.github.com/daggerok/bash-functions/master/main.bash)
-  - stop_any 5432 5672 27017
-
+## update docker
+#- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+#- sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+- sudo apt -y update || true
+- sudo apt install -y --no-install-recommends wget bash curl jq libxml2-utils docker-ce python-pip
+- sudo pip install docker-compose httpie
+- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+- stop_any 5432 5672 27017 8080 80
 script:
-  - export base=$(pwd)
+- export base=$(pwd)
 
-  # ognl-cdi-tracking-data
-  - cd ${base}/ognl-cdi-tracking-data
-  - bash mvnw
-  - bash gradlew
-  - docker-compose build --force-rm --no-cache --pull
-  - docker-compose up --force-recreate --remove-orphans &
-  - sleep 30
-  - http :8080/webapp/
-  - docker-compose down -v
+# ognl-cdi-tracking-data
+- cd ${base}/ognl-cdi-tracking-data
+- bash mvnw
+- bash gradlew
+- docker-compose build --force-rm --no-cache --pull
+- docker-compose up --force-recreate --remove-orphans &
+- sleep 30
+- http :8080/webapp/
+- docker-compose down -v
 
-  - >
-    for project in \
-      array-map-list-mapping \
-      ognl-call-method \
-      session-aware \
-      ognl-tracking-data \
-      struts2-freemarker-out-of-the-box \
-      struts2-velocity \
-    ; do
+- >
+  for project in \
+    array-map-list-mapping \
+    ognl-call-method \
+    session-aware \
+    ognl-tracking-data \
+    struts2-freemarker-out-of-the-box \
+    struts2-velocity \
+  ; do
 
-      cd ${base}/${project}
-      # maven
-      bash mvnw -pl webapp clean package jetty:run &
-      wait_for 8080
-      http :8080/webapp/
-      stop_any 8080
-      # gradle docker
-      bash gradlew clean build
-      docker-compose build --force-rm --no-cache --pull
-      docker-compose up --force-recreate --remove-orphans &
-      sleep 30
-      http :8080/webapp/
-      docker-compose down -v
+    cd ${base}/${project}
+    # maven
+    bash mvnw -pl webapp clean package jetty:run &
+    wait_for 8080
+    http :8080/webapp/
+    stop_any 8080
+    # gradle docker
+    bash gradlew clean build
+    docker-compose build --force-rm --no-cache --pull
+    docker-compose up --force-recreate --remove-orphans &
+    sleep 30
+    http :8080/webapp/
+    docker-compose down -v
 
-    done
+  done
 
-  # result-conventions-and-fallback
-  - cd ${base}/result-conventions-and-fallback
-  # maven
-  - bash mvnw -pl webapp clean package jetty:run &
-  - wait_for 8080
-  - http :8080/webapp/
-  - http :8080/webapp/second-index
-  - http :8080/webapp/second-index/
-  - http :8080/webapp/blah/blah-blah
-  - stop_any 8080
-  # gradle docker
-  - bash gradlew clean build
-  - docker-compose build --force-rm --no-cache --pull
-  - docker-compose up --force-recreate --remove-orphans &
-  - sleep 30
-  - http :8080/webapp/
-  - http :8080/webapp/second-index
-  - http :8080/webapp/second-index/
-  - http :8080/webapp/blah/blah-blah
-  - docker-compose down -v
+# result-conventions-and-fallback
+- cd ${base}/result-conventions-and-fallback
+# maven
+- bash mvnw -pl webapp clean package jetty:run &
+- wait_for 8080
+- http :8080/webapp/
+- http :8080/webapp/second-index
+- http :8080/webapp/second-index/
+- http :8080/webapp/blah/blah-blah
+- stop_any 8080
+# gradle docker
+- bash gradlew clean build
+- docker-compose build --force-rm --no-cache --pull
+- docker-compose up --force-recreate --remove-orphans &
+- sleep 30
+- http :8080/webapp/
+- http :8080/webapp/second-index
+- http :8080/webapp/second-index/
+- http :8080/webapp/blah/blah-blah
+- docker-compose down -v
 
-  # handle-user-date
-  - cd ${base}/handle-user-date
-  # maven
-  - bash mvnw -pl webapp clean package jetty:run &
-  - wait_for 8080
-  - http :8080/webapp/find-all
-  - http :8080/webapp/submit-data.action\?newData=two
-  - http :8080/webapp/find-all
-  - stop_any 8080
-  # gradle docker
-  - bash gradlew clean build
-  - docker-compose build --force-rm --no-cache --pull
-  - docker-compose up --force-recreate --remove-orphans &
-  - sleep 30
-  - http :8080/webapp/find-all
-  - http :8080/webapp/submit-data.action\?newData=three
-  - http :8080/webapp/find-all
-  - docker-compose down -v
+# handle-user-date
+- cd ${base}/handle-user-date
+# maven
+- bash mvnw -pl webapp clean package jetty:run &
+- wait_for 8080
+- http :8080/webapp/find-all
+- http :8080/webapp/submit-data.action\?newData=two
+- http :8080/webapp/find-all
+- stop_any 8080
+# gradle docker
+- bash gradlew clean build
+- docker-compose build --force-rm --no-cache --pull
+- docker-compose up --force-recreate --remove-orphans &
+- sleep 30
+- http :8080/webapp/find-all
+- http :8080/webapp/submit-data.action\?newData=three
+- http :8080/webapp/find-all
+- docker-compose down -v
 
-  # using-conventions
-  - cd ${base}/using-conventions
-  - bash gradlew clean build
-  - bash mvnw clean package
-  - docker-compose build --force-rm --no-cache --pull
-  - docker-compose up --force-recreate --remove-orphans &
-  - sleep 30
-  - http :8080/webapp/
-  - http :8080/webapp/hello
-  - http :8080/webapp/customers/list
-  - docker-compose down -v
+# using-conventions
+- cd ${base}/using-conventions
+- bash gradlew clean build
+- bash mvnw clean package
+- docker-compose build --force-rm --no-cache --pull
+- docker-compose up --force-recreate --remove-orphans &
+- sleep 30
+- http :8080/webapp/
+- http :8080/webapp/hello
+- http :8080/webapp/customers/list
+- docker-compose down -v
 
-  # render-property-from-action
-  - cd ${base}/render-property-from-action
-  # maven jetty plugin
-  - bash mvnw -pl webapp clean package jetty:run &
-  - wait_for 8080
-  - http :8080/webapp/
-  - http :8080/webapp/hello-action
-  - stop_any 8080
-  # docker
-  - bash gradlew
-  - bash mvnw
-  - docker-compose build --force-rm --no-cache --pull
-  - docker-compose up --force-recreate --remove-orphans &
-  - sleep 30
-  - http :8080/webapp/
-  - http :8080/webapp/hello-action
-  - docker-compose down -v
+# render-property-from-action
+- cd ${base}/render-property-from-action
+# maven jetty plugin
+- bash mvnw -pl webapp clean package jetty:run &
+- wait_for 8080
+- http :8080/webapp/
+- http :8080/webapp/hello-action
+- stop_any 8080
+# docker
+- bash gradlew
+- bash mvnw
+- docker-compose build --force-rm --no-cache --pull
+- docker-compose up --force-recreate --remove-orphans &
+- sleep 30
+- http :8080/webapp/
+- http :8080/webapp/hello-action
+- docker-compose down -v
 
-  # message-source-files
-  - cd ${base}/message-source-files
-  - bash mvnw -pl webapp clean package jetty:run &
-  - wait_for 8080
-  - http :8080/webapp/
-  - http :8080/webapp/hello
-  - stop_any 8080
+# message-source-files
+- cd ${base}/message-source-files
+- bash mvnw -pl webapp clean package jetty:run &
+- wait_for 8080
+- http :8080/webapp/
+- http :8080/webapp/hello
+- stop_any 8080
 
-  # struts2-angularjs-starter
-  - cd ${base}/struts2-angularjs-starter
-  - bash mvnw -f webapp/pom.xml clean package jetty:run &
-  - wait_for 8080
-  - http :8080/
-  - http :8080/home
-  - http :8080/projects
-  - stop_any 8080
+# struts2-angularjs-starter
+- cd ${base}/struts2-angularjs-starter
+- bash mvnw -f webapp/pom.xml clean package jetty:run &
+- wait_for 8080
+- http :8080/
+- http :8080/home
+- http :8080/projects
+- stop_any 8080
 
-  # starter
-  - cd ${base}/starter
-  # gradle
-  - bash gradlew clean build
-  # maven
-  - bash mvnw -pl webapp clean package jetty:run &
-  - wait_for 8080
-  - http :8080/webapp/
-  - http :8080/webapp/customers/list
-  - stop_any 8080
-  # docker
-  - docker-compose build --force-rm --no-cache --pull
-  - docker-compose up --force-recreate --remove-orphans &
-  - sleep 30
-  - http :8080/webapp/
-  - http :8080/webapp/customers/list
-  - docker-compose down -v
-
+# starter
+- cd ${base}/starter
+# gradle
+- bash gradlew clean build
+# maven
+- bash mvnw -pl webapp clean package jetty:run &
+- wait_for 8080
+- http :8080/webapp/
+- http :8080/webapp/customers/list
+- stop_any 8080
+# docker
+- docker-compose build --force-rm --no-cache --pull
+- docker-compose up --force-recreate --remove-orphans &
+- sleep 30
+- http :8080/webapp/
+- http :8080/webapp/customers/list
+- docker-compose down -v
 cache:
   directories:
     - $HOME/.m2
