@@ -116,6 +116,19 @@ script:
 - docker-compose down -v
 - stop_any 8080 80
 
+# using-conventions (2.3.35)
+- cd ${base}/using-conventions-struts-2.3.35
+- bash gradlew clean build
+- bash mvnw clean package
+- docker-compose build --force-rm --no-cache --pull
+- docker-compose up --force-recreate --remove-orphans &
+- sleep 30
+- http :8080/webapp/
+- http :8080/webapp/hello
+- http :8080/webapp/customers/list
+- docker-compose down -v
+- stop_any 8080 80
+
 # using-conventions
 - cd ${base}/using-conventions
 - bash gradlew clean build
