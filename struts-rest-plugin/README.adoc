@@ -1,0 +1,77 @@
+= struts-examples image:https://travis-ci.org/daggerok/struts-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/struts-examples"]
+//tag::content[]
+
+.1.1. maven: webapp/pom.xml
+[source,xml]
+----
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-rest-plugin</artifactId>
+      <version>${struts2.version}</version>
+    </dependency>
+----
+
+.1.2. gradle: webapp/build.gradle
+[source,gradle]
+----
+dependencies {
+  compile "org.apache.struts:struts2-rest-plugin:$strutsVersion"
+}
+----
+
+.2. configure convention plugin: webapp/src/main/resources/struts.xml
+[source,xml]
+----
+  <constant name="struts.convention.action.suffix" value="Resource"/>
+  <constant name="struts.convention.action.mapAllMatches" value="true"/>
+  <constant name="struts.convention.default.parent.package" value="rest-default"/>
+  <constant name="struts.convention.package.locators" value="rest"/>
+----
+
+.3 rest controller
+[source,java]
+----
+include::webapp/src/main/java/daggerok/rest/UserResource.java[tags=content]
+----
+
+.4 test
+[source,bash]
+----
+#
+
+http :8080/webapp/
+----
+
+links:
+
+- you can read link:http://struts.apache.org/plugins/rest/[that good] article
+- but, please don't read link:https://www.concretepage.com/struts-2/struts-2-rest-web-service-integration-example[that shit]
+
+=== build, run and test
+
+.embedded jetty (gradle gretty plugin)
+----
+./gradlew clean jettyRun
+http :8080/
+http :8080/user.json
+http :8080/user.xml
+http :8080/user/who-cares.json
+----
+
+.build and run (JBoss in docker)
+----
+docker-compose down -v; ./mvnw; docker-compose up --build --force-recreate --remove-orphans
+http :8080/webapp/
+http :8080/webapp/user.xml
+http :8080/webapp/user/49d3e5ce-20f9-41e4-965c-c945d71e41a8.json
+----
+
+.embedded jetty (maven jetty plugin)
+----
+./mvnw -pl webapp clean jetty:run
+http :8080/
+http :8080/user.xml
+http :8080/user.json
+----
+
+//end::content[]

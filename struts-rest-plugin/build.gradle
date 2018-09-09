@@ -1,0 +1,51 @@
+buildscript {
+  ext {
+    strutsVersion = '2.5.16'
+    log4jVersion = '2.8.2'
+    asmVersion = '5.1'
+  }
+}
+
+plugins {
+  id 'org.akhikhl.gretty' version '2.0.0' apply false
+  id 'io.franzbecker.gradle-lombok' version '1.14' apply false
+  id 'io.spring.dependency-management' version '1.0.6.RELEASE' apply false
+}
+
+allprojects {
+
+  apply plugin: 'base'
+  apply plugin: 'maven'
+
+  group = 'daggerok'
+  version = '0.0.1'
+
+  defaultTasks 'clean', 'build'
+}
+
+subprojects {
+
+  apply plugin: 'java'
+  apply plugin: 'io.spring.dependency-management'
+
+  sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+
+  repositories {
+    mavenCentral()
+    maven { url "http://repo.maven.apache.org/maven2" }
+  }
+
+  apply plugin: 'io.franzbecker.gradle-lombok'
+  lombok.version = '1.18.2'
+
+  dependencies {
+    compileOnly 'javax:javaee-api:7.0'
+  }
+
+  dependencyManagement {
+    imports {
+      mavenBom "org.apache.struts:struts2-bom:$strutsVersion"
+      mavenBom "org.apache.logging.log4j:log4j-bom:$log4jVersion"
+    }
+  }
+}

@@ -1,12 +1,13 @@
 buildscript {
   ext {
-    strutsVersion = "2.5.14.1"
+    strutsVersion = "2.5.16"
     log4jVersion = "2.8.2"
   }
 }
 
 plugins {
-  id "io.spring.dependency-management" version "1.0.4.RELEASE"
+  id 'io.franzbecker.gradle-lombok' version '1.14' apply false
+  id "io.spring.dependency-management" version "1.0.6.RELEASE"
 }
 
 allprojects {
@@ -31,13 +32,14 @@ subprojects {
   sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_7
 
   repositories {
-    mavenLocal()
-
+    mavenCentral()
     maven { url "http://repo.maven.apache.org/maven2" }
   }
 
+  apply plugin: 'io.franzbecker.gradle-lombok'
+  lombok.version = '1.18.2'
+
   dependencies {
     compileOnly "javax:javaee-api:7.0"
-    compileOnly "org.projectlombok:lombok:1.16.18"
   }
 }
