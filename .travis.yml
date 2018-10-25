@@ -23,6 +23,17 @@ before_install:
 script:
 - export base=$(pwd)
 
+# my-chat
+- cd ${base}/my-chat
+- bash mvnw >/dev/null
+- bash gradlew >/dev/null
+- docker-compose up --build --force-recreate --remove-orphans &
+- while [[ $(docker ps -lqf health=healthy | wc -l) -lt 1 ]] ; do echo -ne '.' ; sleep 1s ; done
+- http :8080/my-chat/
+- for i in $(docker ps -qa); do docker rm -f -v $i ; done
+- docker-compose down -v
+- stop_any 8080 80
+
 # struts-rest-plugin
 - cd ${base}/struts-rest-plugin
 - ./mvnw >/dev/null
