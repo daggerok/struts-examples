@@ -42,16 +42,8 @@
 </div>
 
 <script type="text/javascript"
-        src="${pageContext.request.contextPath}/webjars/jquery/3.3.1-1/jquery.min.js"></script>
-<script type="text/javascript"
         src="${pageContext.request.contextPath}/webjars/materializecss/1.0.0/js/materialize.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var elems = document.querySelectorAll('.autocomplete');
-    var instances = M.Autocomplete.init(elems, { data: {} });
-    M.AutoInit(document.body);
-  });
-</script>
+<script>M.AutoInit(document.body);</script>
 
 </body>
 </html>
