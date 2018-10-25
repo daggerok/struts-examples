@@ -21,7 +21,7 @@ public class IndexAction extends ActionSupport implements SessionAware {
   @Setter String body;
   @Setter Map<String, Object> session;
 
-  public void sendMessage() {
+  void sendMessage() {
     if (Objects.isNull(body)) return;
     if (body.trim().isEmpty()) return;
 
