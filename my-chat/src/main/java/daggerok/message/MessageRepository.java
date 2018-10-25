@@ -22,7 +22,7 @@ import static javax.ejb.LockType.WRITE;
 @ConcurrencyManagement(BEAN)
 public class MessageRepository implements Serializable {
 
-  private Map<String, List<Message>> db;
+  Map<String, List<Message>> db;
 
   @PostConstruct
   public void init() {
