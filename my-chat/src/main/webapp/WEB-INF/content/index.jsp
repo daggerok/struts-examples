@@ -36,7 +36,9 @@
 
   <ul class="collection left-align">
     <s:iterator value="messages" var="message">
-      <li class="collection-item">${message.body}</li>
+      <li class="collection-item">
+          ${message.body} <div class="chip">${message.when}</div>
+      </li>
     </s:iterator>
   </ul>
 </div>

@@ -1,7 +1,8 @@
-package daggerok.message;
+package daggerok.message.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -9,12 +10,13 @@ import java.util.UUID;
 import static lombok.AccessLevel.PACKAGE;
 
 @Getter
-@AllArgsConstructor(staticName = "of", access = PACKAGE)
+@NoArgsConstructor(access = PACKAGE)
+@AllArgsConstructor(staticName = "of")
 public class Message {
 
-  final UUID id;
-  final String name, body;
-  final ZonedDateTime createdAt;
+  UUID id;
+  String name, body;
+  ZonedDateTime createdAt;
 
   public static Message of(final String name, final String body) {
     return Message.of(UUID.randomUUID(), name, body, ZonedDateTime.now());
