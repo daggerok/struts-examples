@@ -1,0 +1,50 @@
+buildscript {
+  ext {
+    // log4jVersion = "2.12.1"
+    log4jVersion = "2.9.1"
+    javaeeVersion = "8.0.1"
+    strutsVersion = "2.5.20"
+    jandexVersion = "2.1.1.Final"
+  }
+}
+
+plugins {
+  id("com.github.ben-manes.versions") version "0.25.0"
+  id("org.galaxx.gradle.jandex") version "1.0.2" apply false
+  id("io.franzbecker.gradle-lombok") version "3.1.0" apply false
+}
+
+allprojects {
+  apply plugin: "base"
+  apply plugin: "maven"
+
+  group = "com.github.daggerok"
+  version = "0.0.1-SNAPSHOT"
+}
+
+subprojects {
+  apply(plugin: "war")
+  apply(plugin: "java")
+
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  // targetCompatibility = JavaVersion.VERSION_1_8
+
+  repositories {
+    mavenCentral()
+  }
+
+  apply(plugin: "io.franzbecker.gradle-lombok")
+
+  lombok {
+    version = "1.18.10"
+  }
+
+  dependencies {
+    runtime("org.jboss:jandex:$jandexVersion")
+    providedCompile("javax:javaee-api:$javaeeVersion")
+    implementation(platform("org.apache.struts:struts2-bom:$strutsVersion"))
+    implementation(platform("org.apache.logging.log4j:log4j-bom:$log4jVersion"))
+  }
+}
+
+defaultTasks "clean", "build"

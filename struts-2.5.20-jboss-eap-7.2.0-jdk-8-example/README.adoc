@@ -1,0 +1,50 @@
+= struts-examples image:https://travis-ci.org/daggerok/struts-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/struts-examples"]
+
+//tag::content[]
+
+This repository contains struts 2.5.20 / JBoss 7.2.20 example.
+Yes, old and shitty technologies, but we also have to support it...
+
+== build, run and test
+
+.maven
+[source,bash]
+----
+# build:
+mvn
+
+# run:
+docker-compose -f .mvn/docker-compose.yaml up
+
+# test:
+http :8080/webapp/
+
+# shutdown:
+docker-compose -f .mvn/docker-compose.yaml down -v --rmi local
+----
+
+.gradle
+[source,bash]
+----
+# build:
+gradle
+
+# run:
+docker-compose -f gradle/docker-compose.yaml up
+
+# test:
+http :8080/webapp/
+
+# shutdown:
+docker-compose -f gradle/docker-compose.yaml down -v --rmi local
+----
+
+links:
+
+. link:http://akhikhl.github.io/gretty-doc/Gretty-configuration.html[Gretty plugin]
+. link:http://akhikhl.github.io/gretty-doc/Debugger-support.html[Embedded debug]
+. link:https://www.eclipse.org/jetty/documentation/9.4.x/jetty-maven-plugin.html[Jetty maven plugin]
+. link:http://struts.apache.org/plugins/convention/[Struts convention]
+. link:http://struts.apache.org/getting-started/message-resource-files.html[Message resource files]
+
+//end::content[]

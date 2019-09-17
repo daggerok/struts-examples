@@ -1,3 +1,6 @@
+git:
+  quiet: true
+  depth: false
 env:
   global:
   - TERM=dumb
@@ -40,6 +43,33 @@ before_script:
 - export base=$(pwd)
 jobs:
   include:
+  - stage: test
+    name: struts-2.5.20-jboss-eap-7.2.0-jdk-8-example
+    jdk: openjdk8
+    script:
+    - cd ${base}/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/
+    #
+    - ./mvnw >/dev/null
+    - docker-compose -f .mvn/docker-compose.yaml up --build --force-recreate --remove-orphans &
+    - while [[ $(docker ps -lqf health=healthy | wc -l) -lt 1 ]] ; do echo -ne '.' ; sleep 1s ; done
+    - http :8080/webapp/
+    - http :8080/webapp/customers/list
+    - for i in $(docker ps -qa); do docker rm -f -v $i ; done
+    - docker-compose -f .mvn/docker-compose.yaml down -v --rmi local
+    - stop_any 80 8080
+    - ./mvnw versions:display-parent-updates versions:display-dependency-updates versions:display-plugin-updates -U
+    #
+    - ./gradlew >/dev/null
+    - docker-compose -f gradle/docker-compose.yaml up --build --force-recreate --remove-orphans &
+    - while [[ $(docker ps -lqf health=healthy | wc -l) -lt 1 ]] ; do echo -ne '.' ; sleep 1s ; done
+    - http :8080/webapp/
+    - http :8080/webapp/customers/list
+    - for i in $(docker ps -qa); do docker rm -f -v $i ; done
+    - docker-compose -f gradle/docker-compose.yaml down -v --rmi local
+    - stop_any 80 8080
+    - ./gradlew dependencyUpdates -Drevision=release
+    - ./gradlew --stop >/dev/null
+    #
   - stage: test
     name: my-chat
     jdk: openjdk8

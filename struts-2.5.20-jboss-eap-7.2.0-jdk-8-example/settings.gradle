@@ -1,0 +1,2 @@
+rootProject.name = "struts-2.5.20-jboss-eap-7.2.0-jdk-8-example"
+include(":webapp")
