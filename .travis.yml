@@ -360,6 +360,10 @@ jobs:
     - http :8080/webapp/customers/list
     - docker-compose down -v
     - stop_any 8080 80
+before_cache:
+- for item in $(find ~/.gradle -name "*.lock") ;
+    do sudo rm -rf $item ;
+  done
 cache:
   pip: true
   packages: true
