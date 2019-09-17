@@ -50,7 +50,7 @@ jobs:
     - cd ${base}/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/
     - ./mvnw >/dev/null
     - docker-compose -f .mvn/docker-compose.yaml up --build --force-recreate --remove-orphans &
-    - while [[ $(docker ps -lqf health=healthy | wc -l) -lt 1 ]] ; do echo -ne '.' ; sleep 1s ; done
+    - while [[ $(docker ps -lqf health=healthy | wc -l) -lt 1 ]] ; do echo -ne '.' ; sleep 3s ; done
     - http :8080/webapp/
     - http :8080/webapp/customers/list
     - for i in $(docker ps -qa); do docker rm -f -v $i ; done
@@ -70,7 +70,7 @@ jobs:
     - ./gradlew >/dev/null
     - ./gradlew --stop >/dev/null
     - docker-compose -f gradle/docker-compose.yaml up --build --force-recreate --remove-orphans &
-    - while [[ $(docker ps -lqf health=healthy | wc -l) -lt 1 ]] ; do echo -ne '.' ; sleep 1s ; done
+    - while [[ $(docker ps -lqf health=healthy | wc -l) -lt 1 ]] ; do echo -ne '.' ; sleep 3s ; done
     - http :8080/webapp/
     - http :8080/webapp/customers/list
     - for i in $(docker ps -qa); do docker rm -f -v $i ; done
