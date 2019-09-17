@@ -375,7 +375,7 @@ jobs:
     - stop_any 8080 80
 before_cache:
 - for item in $(find ~/.gradle -name "*.lock") ;
-    do sudo rm -rf $item ;
+    do sudo rm -rfv $item ;
   done
 cache:
   pip: true

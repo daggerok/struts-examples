@@ -25,9 +25,9 @@
     <struts2.version>2.5.20</struts2.version>
     <jandex.version>2.1.1.Final</jandex.version>
     <javaee-api.version>8.0.1</javaee-api.version>
-    <maven-war-plugin.version>3.2.0</maven-war-plugin.version>
+    <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
     <jandex-maven-plugin.version>1.0.6</jandex-maven-plugin.version>
-    <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
   </properties>
 
   <modules>
