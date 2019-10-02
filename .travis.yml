@@ -6,43 +6,67 @@ env:
   - TERM=dumb
 language: java
 jdk: openjdk8
+python:
+  - "3.7"
+matrix:
+  include:
+    - python: "3.7"
 service:
 - docker
 addons:
   apt:
     update: true
     packages:
+    - jq
+    - zip
     - sudo
     - lsof
     - wget
     - bash
     - curl
-    - jq
-    - libxml2-utils
     - unzip
     - docker-ce
     - python3-dev
     - python3-pip
     - python3-six
-    - python3-setuptools
+    - libxml2-utils
     - libappindicator1
     - fonts-liberation
+    - python3-setuptools
     - google-chrome-stable
 install: true
 before_install:
-- docker-compose -v
 - export PATH=$HOME/.local/bin:$PATH
-- pip3 install --user $(whoami) --upgrade pip >/dev/null # pip3 -> pip
-- pip install --user $(whoami) --upgrade docker-compose httpie >/dev/null 2>&1
+- pip install --user --upgrade pip
+- pip install --user --upgrade docker-compose httpie
 - http --version --debug
 - docker-compose -v
-#
-- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+#- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+- |
+  if [ ! -f $HOME/.local/daggerok/bash-functions/master/main.bash ] ; then
+    mkdir -p $HOME/.local/daggerok/bash-functions/master ;
+    curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash > $HOME/.local/daggerok/bash-functions/master/main.bash ;
+  fi
+  source $HOME/.local/daggerok/bash-functions/master/main.bash ;
 - stop_any 80 8001 8002 8080 5432
 before_script:
 - export base=$(pwd)
 jobs:
   include:
+  - stage: test
+    name: struts2dolist test
+    jdk: openjdk8
+    script:
+    - cd ${base}/struts2dolist/
+    - ./mvnw >/dev/null
+    - for i in $(docker ps -aq) ; do docker rm -f -v $i ; done
+    - ./mvnw -pl :docker docker-compose:up
+    - docker logs -f -t docker_site_1 &
+    - while [[ $(docker ps -lq --filter=health=healthy  | wc -l) -lt 1 ]] ; do echo -ne '.' ; sleep 3s ; done
+    - http :8080/site/
+    - http :8080/site/
+    - http :8080/site/
+    - ./mvnw -pl :docker docker-compose:down >/dev/null
   - stage: test
     name: struts-2.5.20-jboss-eap-7.2.0-jdk-8-example maven docker-compose test
     jdk: openjdk8
@@ -384,3 +408,4 @@ cache:
   - $HOME/.m2
   - $HOME/.docker
   - $HOME/.gradle
+  - ~/.local/daggerok

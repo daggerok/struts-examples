@@ -1,0 +1,15 @@
+version: '2.1'
+#version: '3.4'
+networks:
+  struts2dolist:
+    driver: bridge
+services:
+  site:
+    build:
+      context: ..
+      dockerfile: docker/site/Dockerfile
+    networks: [struts2dolist]
+    ports: ['5005:5005',
+            '8080:8080',
+            '8443:8443',
+            '9990:9990']

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <artifactId>struts2dolist</artifactId>
+        <groupId>com.github.daggerok.struts2dolist</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>docker</artifactId>
+    <packaging>pom</packaging>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.dkanejs.maven.plugins</groupId>
+                    <artifactId>docker-compose-maven-plugin</artifactId>
+                    <version>${docker-compose-maven-plugin.version}</version>
+                    <configuration>
+                        <composeFile>${project.basedir}/docker-compose.yml</composeFile>
+                        <ignorePullFailures>true</ignorePullFailures>
+                        <removeImagesType>local</removeImagesType>
+                        <removeVolumes>true</removeVolumes>
+                        <removeVolumes>true</removeVolumes>
+                        <removeOrphans>true</removeOrphans>
+                        <detachedMode>true</detachedMode>
+                        <removeImages>true</removeImages>
+                        <verbose>false</verbose>
+                        <detail>true</detail>
+                        <build>true</build>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
