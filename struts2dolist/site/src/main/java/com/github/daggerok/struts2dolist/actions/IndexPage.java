@@ -5,10 +5,14 @@ import com.opensymphony.xwork2.ActionSupport;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
-import org.apache.struts2.convention.annotation.*;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.interceptor.SessionAware;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import java.util.Map;
 import java.util.Objects;
 
 @Results({
@@ -17,11 +21,7 @@ import java.util.Objects;
 })
 @Log4j2
 @RequestScoped
-// @Namespaces({
-//         @Namespace(""),
-//         @Namespace("/"),
-// })
-public class IndexPage extends ActionSupport {
+public class IndexPage extends ActionSupport implements SessionAware {
 
     @Inject
     private MessageService messageService;
@@ -32,13 +32,16 @@ public class IndexPage extends ActionSupport {
     @Setter
     private String body;
 
+    @Setter(onMethod_ = @Override)
+    Map<String, Object> session;
+
     @Override
     @Action("/send-message")
     public String input() throws Exception {
         final String globalState = messageService.getGlobalState();
-        log.debug("writing: {}", body);
+        log.debug("writing: {}, {}", body, session);
         if (Objects.nonNull(body)) this.message = messageService.appendAndGet(body);
-        return SUCCESS;
+        return INPUT;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class IndexPage extends ActionSupport {
     public String execute() throws Exception {
         // final String globalState = messageService.getGlobalState();
         // log.debug("reading: {}", globalState);
-        log.debug("reading...");
+        log.debug("reading... {}", session);
         this.message = messageService.appendAndGet("Hoy!");
         return SUCCESS;
     }
