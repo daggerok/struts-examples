@@ -1,14 +1,11 @@
-package com.github.daggerok.struts2dolist.mvc;
+package com.github.daggerok.struts2dolist.actions;
 
 import com.github.daggerok.struts2dolist.message.MessageService;
 import com.opensymphony.xwork2.ActionSupport;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.convention.annotation.*;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -20,7 +17,10 @@ import java.util.Objects;
 })
 @Log4j2
 @RequestScoped
-@Namespace("/")
+// @Namespaces({
+//         @Namespace(""),
+//         @Namespace("/"),
+// })
 public class IndexPage extends ActionSupport {
 
     @Inject

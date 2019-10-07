@@ -12,7 +12,7 @@
     <title>Hola!</title>
 </head>
 <body>
-<s:form action="send-message">
+<s:form action="send-message" namespace="/">
     <s:textfield name="body" label="Message Body" autofocus="" />
     <s:submit />
 </s:form>
