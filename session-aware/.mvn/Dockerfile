@@ -1,6 +1,8 @@
 FROM daggerok/jboss:eap-7.1
-HEALTHCHECK --timeout=3s \
-            --retries=33 \
+HEALTHCHECK --retries=33 \
+            --timeout=3s \
+            --interval=3s \
+            --start-period=3s \
             CMD wget -q --spider http://127.0.0.1:8080/webapp/ || exit 1
 ENV JAVA_OPTS="${JAVA_OPTS} \
 -XX:+UnlockExperimentalVMOptions \
