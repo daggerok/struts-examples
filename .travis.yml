@@ -7,6 +7,7 @@ jdk: openjdk8
 node_js: lts/*
 python: 3.7
 services: docker
+os: linux
 addons:
   apt:
     update: true
@@ -28,8 +29,7 @@ before_install:
   - export PATH=$HOME/.local/bin:$PATH
   - pip3 install --user --upgrade pip setuptools
   - pip install --user --upgrade docker-compose httpie
-  - http --version --debug
-  - docker-compose -v
+  - docker-compose version
   - stop_any 80 8001 8002 8080 5432
 before_script:
 - export base=$(pwd)
@@ -37,46 +37,42 @@ jobs:
   include:
   - stage: test
     name: struts2dolist test
-    jdk: openjdk8
     script:
     - cd ${base}/struts2dolist/
     - ./mvnw >/dev/null
     - for i in $(docker ps -aq) ; do docker rm -f -v $i ; done
     - ./mvnw -pl :docker docker-compose:up
     - docker logs -f -t docker_site_1 &
-    - while [[ $(docker ps -lq --filter=health=healthy  | wc -l) -lt 1 ]] ; do echo -ne '.' ; sleep 3s ; done
+    - wait_healthy_docker_containers 1
     - http :8080/site/
     - http :8080/site/
     - http :8080/site/
     - ./mvnw -pl :docker docker-compose:down >/dev/null
   - stage: test
     name: struts-2.5.20-jboss-eap-7.2.0-jdk-8-example maven docker-compose test
-    jdk: openjdk8
     script:
     - cd ${base}/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/
     - ./mvnw >/dev/null
     - docker-compose -f .mvn/docker-compose.yaml up --build --force-recreate --remove-orphans &
-    - while [[ $(docker ps -lqf health=healthy | wc -l) -lt 1 ]] ; do echo -ne '.' ; sleep 3s ; done
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - http :8080/webapp/customers/list
     - for i in $(docker ps -qa); do docker rm -f -v $i ; done
     - docker-compose -f .mvn/docker-compose.yaml down -v --rmi local
     - stop_any 80 8080
   - stage: test
-    name: struts-2.5.20-jboss-eap-7.2.0-jdk-8-example maven versions display
-    jdk: openjdk8
+    name: struts-2.5.20-jboss-eap-7.2.0-jdk-8-examplemaven versions display
     script:
     - cd ${base}/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/
     - ./mvnw versions:display-parent-updates versions:display-dependency-updates versions:display-plugin-updates -U
   - stage: test
     name: struts-2.5.20-jboss-eap-7.2.0-jdk-8-example gradle docker-compose test
-    jdk: openjdk8
     script:
     - cd ${base}/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/
     - ./gradlew >/dev/null
     - ./gradlew --stop >/dev/null
     - docker-compose -f gradle/docker-compose.yaml up --build --force-recreate --remove-orphans &
-    - while [[ $(docker ps -lqf health=healthy | wc -l) -lt 1 ]] ; do echo -ne '.' ; sleep 3s ; done
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - http :8080/webapp/customers/list
     - for i in $(docker ps -qa); do docker rm -f -v $i ; done
@@ -84,27 +80,24 @@ jobs:
     - stop_any 80 8080
   - stage: test
     name: struts-2.5.20-jboss-eap-7.2.0-jdk-8-example gradle dependency updates
-    jdk: openjdk8
     script:
     - cd ${base}/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/
     - ./gradlew dependencyUpdates -Drevision=release
     - ./gradlew --stop >/dev/null
   - stage: test
-    name: my-chat
-    jdk: openjdk8
+    name: my-chat docker-compose
     script:
     - cd ${base}/my-chat
     - bash mvnw >/dev/null
     - bash gradlew >/dev/null
     - docker-compose up --build --force-recreate --remove-orphans &
-    - while [[ $(docker ps -lqf health=healthy | wc -l) -lt 1 ]] ; do echo -ne '.' ; sleep 1s ; done
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/my-chat/
     - for i in $(docker ps -qa); do docker rm -f -v $i ; done
     - docker-compose down -v
     - stop_any 8080 80
   - stage: test
-    name: struts-rest-plugin
-    jdk: openjdk8
+    name: struts-rest-plugin maven jetty run
     script:
     - cd ${base}/struts-rest-plugin
     - ./mvnw >/dev/null
@@ -120,132 +113,141 @@ jobs:
     #- http :8080/user.json
     #- stop_any 8080 80
   - stage: test
-    name: ognl-cdi-tracking-data
-    jdk: openjdk8
+    name: ognl-cdi-tracking-data docker-compose
     script:
     - cd ${base}/ognl-cdi-tracking-data
     - bash mvnw >/dev/null
     - bash gradlew >/dev/null
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - docker-compose down -v
     - stop_any 8080 80
   - stage: test
-    name: ognl-call-method
-    jdk: openjdk8
+    name: ognl-call-method maven
     script:
     - cd ${base}/ognl-call-method
-    # maven
     - bash mvnw -pl webapp clean package jetty:run &
     - wait_for 8080
     - http :8080/webapp/
     - stop_any 8080
-    # gradle docker
+  - stage: test
+    name: ognl-call-method docker-compose
+    script:
+    - cd ${base}/ognl-call-method
+    - bash mvnw -pl webapp clean package
     - bash gradlew clean build
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - docker-compose down -v
     - stop_any 8080 80
   - stage: test
-    name: array-map-list-mapping
-    jdk: openjdk8
+    name: array-map-list-mapping maven
     script:
     - cd ${base}/array-map-list-mapping
-    # maven
     - bash mvnw -pl webapp clean package jetty:run &
     - wait_for 8080
     - http :8080/webapp/
     - stop_any 8080
-    # gradle docker
+  - stage: test
+    name: array-map-list-mapping docker-compose
+    script:
+    - cd ${base}/array-map-list-mapping
+    - bash mvnw -pl webapp clean package
     - bash gradlew clean build
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - docker-compose down -v
     - stop_any 8080 80
   - stage: test
-    name: session-aware
-    jdk: openjdk8
+    name: session-aware maven
     script:
     - cd ${base}/session-aware
-    # maven
     - bash mvnw -pl webapp clean package jetty:run &
     - wait_for 8080
     - http :8080/webapp/
     - stop_any 8080
-    # gradle docker
+  - stage: test
+    name: session-aware docker-compose
+    script:
+    - cd ${base}/session-aware
+    - bash mvnw -pl webapp clean package
     - bash gradlew clean build
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - docker-compose down -v
     - stop_any 8080 80
   - stage: test
-    name: ognl-tracking-data
-    jdk: openjdk8
+    name: ognl-tracking-data maven
     script:
     - cd ${base}/ognl-tracking-data
-    # maven
     - bash mvnw -pl webapp clean package jetty:run &
     - wait_for 8080
     - http :8080/webapp/
     - stop_any 8080
-    # gradle docker
+  - stage: test
+    name: ognl-tracking-data docker-compose
+    script:
+    - cd ${base}/ognl-tracking-data
+    - bash mvnw -pl webapp clean package
     - bash gradlew clean build
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - docker-compose down -v
     - stop_any 8080 80
   - stage: test
-    name: struts2-freemarker-out-of-the-box
-    jdk: openjdk8
+    name: struts2-freemarker-out-of-the-box maven
     script:
     - cd ${base}/struts2-freemarker-out-of-the-box
-    # maven
     - bash mvnw -pl webapp clean package jetty:run &
     - wait_for 8080
     - http :8080/webapp/
     - stop_any 8080
-    # gradle docker
+  - stage: test
+    name: struts2-freemarker-out-of-the-box docker-compose
+    script:
+    - cd ${base}/struts2-freemarker-out-of-the-box
+    - bash mvnw clean package
     - bash gradlew clean build
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - docker-compose down -v
     - stop_any 8080 80
   - stage: test
-    name: struts2-velocity
-    jdk: openjdk8
+    name: struts2-velocity maven
     script:
     - cd ${base}/struts2-velocity
-    # maven
     - bash mvnw -pl webapp clean package jetty:run &
     - wait_for 8080
     - http :8080/webapp/
     - stop_any 8080
-    # gradle docker
+  - stage: test
+    name: struts2-velocity docker-compose
+    script:
+    - cd ${base}/struts2-velocity
+    - bash mvnw clean package
     - bash gradlew clean build
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - docker-compose down -v
     - stop_any 8080 80
   - stage: test
-    name: result-conventions-and-fallback
-    jdk: openjdk8
+    name: result-conventions-and-fallback maven
     script:
     - cd ${base}/result-conventions-and-fallback
-    # maven
     - bash mvnw -pl webapp clean package jetty:run &
     - wait_for 8080
     - http :8080/webapp/
@@ -253,11 +255,15 @@ jobs:
     - http :8080/webapp/second-index/
     - http :8080/webapp/blah/blah-blah
     - stop_any 8080 80
-    # gradle docker
+  - stage: test
+    name: result-conventions-and-fallback docker-compose
+    script:
+    - cd ${base}/result-conventions-and-fallback
+    - bash mvnw clean package
     - bash gradlew clean build
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - http :8080/webapp/second-index
     - http :8080/webapp/second-index/
@@ -265,22 +271,24 @@ jobs:
     - docker-compose down -v
     - stop_any 8080 80
   - stage: test
-    name: handle-user-date
-    jdk: openjdk8
+    name: handle-user-date maven jetty
     script:
     - cd ${base}/handle-user-date
-    # maven
     - bash mvnw -pl webapp clean package jetty:run &
     - wait_for 8080
     - http :8080/webapp/find-all
     - http :8080/webapp/submit-data.action\?newData=two
     - http :8080/webapp/find-all
     - stop_any 8080 80
-    # gradle docker
+  - stage: test
+    name: handle-user-date docker-compose
+    script:
+    - cd ${base}/handle-user-date
+    - bash mvnw clean package
     - bash gradlew clean build
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/find-all
     - http :8080/webapp/submit-data.action\?newData=three
     - http :8080/webapp/find-all
@@ -288,14 +296,13 @@ jobs:
     - stop_any 8080 80
   - stage: test
     name: using-conventions-struts-2.3.35
-    jdk: openjdk8
     script:
     - cd ${base}/using-conventions-struts-2.3.35
     - bash gradlew clean build
     - bash mvnw clean package
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - http :8080/webapp/hello
     - http :8080/webapp/customers/list
@@ -303,43 +310,42 @@ jobs:
     - stop_any 8080 80
   - stage: test
     name: using-conventions
-    jdk: openjdk8
     script:
     - cd ${base}/using-conventions
     - bash gradlew clean build
     - bash mvnw clean package
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - http :8080/webapp/hello
     - http :8080/webapp/customers/list
     - docker-compose down -v
     - stop_any 8080 80
   - stage: test
-    name: render-property-from-action
-    jdk: openjdk8
+    name: render-property-from-action maven jetty plugin
     script:
     - cd ${base}/render-property-from-action
-    # maven jetty plugin
     - bash mvnw -pl webapp clean package jetty:run &
     - wait_for 8080
     - http :8080/webapp/
     - http :8080/webapp/hello-action
     - stop_any 8080 80
-    # docker
-    - bash gradlew
-    - bash mvnw
+  - stage: test
+    name: render-property-from-action docker-compose
+    script:
+    - cd ${base}/render-property-from-action
+    - bash gradlew >/dev/null
+    - bash mvnw >/dev/null
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - http :8080/webapp/hello-action
     - docker-compose down -v
     - stop_any 8080 80
   - stage: test
     name: message-source-files
-    jdk: openjdk8
     script:
     - cd ${base}/message-source-files
     - bash mvnw -pl webapp clean package jetty:run &
@@ -349,7 +355,6 @@ jobs:
     - stop_any 8080
   - stage: test
     name: struts2-angularjs-starter
-    jdk: openjdk8
     script:
     - cd ${base}/struts2-angularjs-starter
     - bash mvnw -f webapp/pom.xml clean package jetty:run &
@@ -359,22 +364,28 @@ jobs:
     - http :8080/projects
     - stop_any 8080 80
   - stage: test
-    name: starter
-    jdk: openjdk8
+    name: starter gradle
     script:
     - cd ${base}/starter
-    # gradle
     - bash gradlew clean build
-    # maven
+  - stage: test
+    name: starter maven jetty plugin
+    script:
+    - cd ${base}/starter
     - bash mvnw -pl webapp clean package jetty:run &
     - wait_for 8080
     - http :8080/webapp/
     - http :8080/webapp/customers/list
     - stop_any 8080 80
-    # docker
+  - stage: test
+    name: starter docker-compose
+    script:
+    - cd ${base}/starter
+    - bash gradlew clean build >/dev/null
+    - bash mvnw clean package >/dev/null
     - docker-compose build --force-rm --no-cache --pull
     - docker-compose up --force-recreate --remove-orphans &
-    - sleep 30
+    - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
     - http :8080/webapp/
     - http :8080/webapp/customers/list
     - docker-compose down -v
@@ -387,7 +398,7 @@ cache:
   pip: true
   packages: true
   directories:
-  - $HOME/.m2
-  - $HOME/.docker
-  - $HOME/.gradle
+  - ~/.m2
+  - ~/.docker
+  - ~/.gradle
   - ~/.local/daggerok
