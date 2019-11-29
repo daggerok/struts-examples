@@ -3,6 +3,8 @@
 
 This repository contains struts examples.
 
+Checkout official examples in link:https://github.com/apache/struts-examples[GItHub: apache/struts-examples repository]
+
 Yes... Old shit technologies... Sometimes we also have to support them =\
 
 - link:./starter/[My Char App by using: JavaEE CDI, Struts2, materialize.css, maven, gradle, docker, JBOSS EAP 7.1]
