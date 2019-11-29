@@ -1,27 +1,39 @@
 = struts-examples image:https://travis-ci.org/daggerok/struts-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/struts-examples"]
+
 //tag::content[]
 
-== Struts zero-configuration
+.gradle
+----
+./gradlew ; ./gradlew :webapp:appRun &
 
-By using conventions we can avoid struts.xml configurations...
+http :8080/webapp/
+http :8080/webapp/hello
+http :8080/webapp/customers/list
 
-. create folder WEB-INF/content and put into it your .jsp files
-. actions must follows one of these rules:
-.. implement interface `com.opensymphony.xwork2.Action`
-.. name ends with Action in packages
-... ...action  `foo.bar.action.HelloAction` -> `/hello`
-... ...actions `com.baz.actions.OloloAction` -> `/ololo`
-... ...struts
-... ...struts2 `daggerok.strats2.customers.FindAction` -> `/customers/find`
-.. package name determines path
+./gradlew :webapp:appStop
+----
+
+.maven
+----
+./mvnw ; ./mvnw -f webapp jetty:run &
+
+http :8080/webapp/
+http :8080/webapp/hello
+http :8080/webapp/customers/list
+
+./mvnw -f webapp jetty:stop
+----
 
 .build and run
 ----
+./mvnw ; ./gradlew
 docker-compose down -v; ./gradlew; docker-compose up --build --force-recreate --remove-orphans
 
 http :8080/webapp/
 http :8080/webapp/hello
 http :8080/webapp/customers/list
+
+docker-compose down -v --rmi local
 ----
 
 //end::content[]

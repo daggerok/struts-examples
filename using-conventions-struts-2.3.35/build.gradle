@@ -1,51 +1,55 @@
 buildscript {
   ext {
-    strutsVersion = '2.3.35'
-    log4jVersion = '2.8.2'
-    asmVersion = '5.1'
+    strutsVersion = "2.3.35"
+    log4jVersion = "2.8.2"
+    asmVersion = "5.1"
   }
 }
 
 plugins {
-  id 'io.franzbecker.gradle-lombok' version '1.14' apply false
-  id 'io.spring.dependency-management' version '1.0.6.RELEASE' apply false
+  id("com.github.ben-manes.versions") version "0.27.0"
+  id("io.franzbecker.gradle-lombok") version "3.2.0" apply false
+  id("io.spring.dependency-management") version "1.0.8.RELEASE" apply false
 }
 
 allprojects {
+  apply(plugin: "base")
+  apply(plugin: "maven")
 
-  apply plugin: 'base'
-  apply plugin: 'maven'
-
-  group = 'daggerok'
-  version = '0.0.1'
-
-  defaultTasks 'clean', 'build'
+  group = "daggerok"
+  version = "0.0.2"
 }
 
 subprojects {
-
-  apply plugin: 'java'
-  sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_7
+  apply(plugin: "java")
+  sourceCompatibility = JavaVersion.VERSION_1_7
+  targetCompatibility = JavaVersion.VERSION_1_7
 
   repositories {
     mavenCentral()
-    maven { url 'http://repo.maven.apache.org/maven2' }
+    maven { url("http://repo.maven.apache.org/maven2") }
     jcenter()
   }
 
-  apply plugin: 'io.franzbecker.gradle-lombok'
-  lombok.version = '1.18.2'
+  apply(plugin: "io.franzbecker.gradle-lombok")
+  lombok.version = "1.18.10"
 
-  apply plugin: 'io.spring.dependency-management'
+  apply(plugin: "io.spring.dependency-management")
 
   dependencyManagement {
     imports {
-      mavenBom "org.apache.struts:struts2-bom:$strutsVersion"
-      mavenBom "org.apache.logging.log4j:log4j-bom:$log4jVersion"
+      mavenBom("org.apache.struts:struts2-bom:$strutsVersion")
+      mavenBom("org.apache.logging.log4j:log4j-bom:$log4jVersion")
     }
   }
 
   dependencies {
-    compileOnly 'javax:javaee-api:7.0'
+    compileOnly("javax:javaee-api:7.0")
   }
 }
+
+wrapper {
+  gradleVersion = "5.6.4"
+}
+
+defaultTasks("clean", "build")

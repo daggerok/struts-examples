@@ -2,24 +2,24 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>daggerok</groupId>
     <artifactId>parent</artifactId>
-    <version>0.0.1</version>
+    <relativePath>../pom.xml</relativePath>
+    <version>0.0.2</version>
   </parent>
 
+  <modelVersion>4.0.0</modelVersion>
   <artifactId>webapp</artifactId>
   <packaging>war</packaging>
 
   <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.apache.struts.xwork/xwork-core -->
-    <dependency>
+    <!--<dependency>
       <groupId>org.apache.struts.xwork</groupId>
       <artifactId>xwork-core</artifactId>
       <version>${struts2.version}</version>
-    </dependency>
+    </dependency>-->
 
     <dependency>
       <groupId>org.apache.struts</groupId>
@@ -32,7 +32,7 @@
       <version>${struts2.version}</version>
     </dependency>
 
-    <dependency>
+    <!--<dependency>
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm</artifactId>
       <version>${asm.version}</version>
@@ -41,7 +41,7 @@
       <groupId>org.ow2.asm</groupId>
       <artifactId>asm-commons</artifactId>
       <version>${asm.version}</version>
-    </dependency>
+    </dependency>-->
 
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
@@ -60,7 +60,7 @@
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
-        <version>9.3.3.v20150827</version>
+        <version>${jetty-maven-plugin.version}</version>
         <configuration>
           <stopKey>CTRL+C</stopKey>
           <stopPort>8999</stopPort>

@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
-  <Appenders>
-    <Console name="STDOUT" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
-    </Console>
-  </Appenders>
-  <Loggers>
-    <Logger name="com.opensymphony.xwork2" level="info"/>
-    <Logger name="org.apache.struts2" level="debug"/>
-    <Logger name="daggerok" level="info"/>
-    <Root level="warn">
-      <AppenderRef ref="STDOUT"/>
-    </Root>
-  </Loggers>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="PID">%5X{pid}</Property>
+        <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xEx</Property>
+        <Property name="LOG_LEVEL_PATTERN">%5p</Property>
+        <Property name="LOG_PATTERN">%style{%d{yyyy-MM-dd HH:mm:ss.SSS}}{dim} %highlight{${LOG_LEVEL_PATTERN}} %style{---}{dim} %style{[%15.15t]}{yellow} %style{%-20.20c{1.}}{cyan} %style{%20.20M}{magenta} %style{:}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
+    </Properties>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <logger name="org.jboss.weld" level="WARN" additivity="false">
+            <appender-ref ref="ConsoleAppender"/>
+        </logger>
+        <logger name="daggerok" level="ALL" additivity="false">
+            <appender-ref ref="ConsoleAppender"/>
+        </logger>
+        <Logger name="com.opensymphony.xwork2" level="info"/>
+        <Logger name="org.apache.struts2" level="debug"/>
+        <Root level="warn">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Root>
+    </Loggers>
 </Configuration>

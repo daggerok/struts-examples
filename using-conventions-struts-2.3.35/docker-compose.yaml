@@ -1,20 +1,17 @@
 version: "2.1"
-
-services:
-
-  webapp:
-    build: .
-    volumes: ["webapp-data:/home"]
-    ports:
-      - "5005:5005"
-      - "8080:8080"
-      - "9990:9990"
-    mem_limit: 786432000
-    networks: [backing-services]
-
-volumes:
-  webapp-data: {}
-
 networks:
   backing-services:
     driver: bridge
+services:
+  gradle:
+    build:
+      context: .
+      dockerfile: gradle/Dockerfile
+    networks: [backing-services]
+    ports: ["8081:8080"]
+  maven:
+    build:
+      context: .
+      dockerfile: .mvn/Dockerfile
+    networks: [backing-services]
+    ports: ["8080:8080"]
