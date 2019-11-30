@@ -1,4 +1,4 @@
-FROM daggerok/jboss-eap-7.2:7.2.0-alpine
+FROM daggerok/jboss-eap-7.2
 HEALTHCHECK --retries=33 \
             --timeout=3s \
             --interval=3s \
@@ -17,4 +17,4 @@ ENV JAVA_OPTS="${JAVA_OPTS} \
   -Djava.awt.headless=true"
 RUN echo "JAVA_OPTS=\"\$JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 \"" >> ${JBOSS_HOME}/bin/standalone.conf
 EXPOSE 5005
-COPY --chown=jboss ./webapp/build/libs/*.war ${JBOSS_HOME}/standalone/deployments/
+COPY --chown=jboss ./build/libs/*.war ${JBOSS_HOME}/standalone/deployments/

@@ -6,13 +6,13 @@ networks:
     driver: bridge
 services:
   webapp:
+    #mem_limit: 786432000 # container limit: 750Mb (750 * 1024 * 1024)
     build:
       context: ..
       dockerfile: ./gradle/Dockerfile
     volumes: ["webapp-data:/home"]
+    networks: [backing-services]
     ports:
       - "5005:5005"
       - "8080:8080"
       - "9990:9990"
-    mem_limit: 786432000 # container limit: 750Mb (750 * 1024 * 1024)
-    networks: [backing-services]

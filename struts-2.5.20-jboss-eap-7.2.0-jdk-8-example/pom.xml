@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
   <groupId>daggerok</groupId>
-  <artifactId>struts-2.5.20-jboss-eap-7.2.0-jdk-8-example</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
+  <name>${project.artifactId}</name>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>webapp</artifactId>
+  <version>0.0.2-SNAPSHOT</version>
+  <packaging>war</packaging>
 
   <properties>
     <java.version>1.8</java.version>
@@ -19,20 +20,17 @@
     <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 
     <asm.version>5.2</asm.version>
+    <!--<log4j2.version>2.8.2</log4j2.version>-->
     <!--<log4j2.version>2.9.1</log4j2.version>-->
     <log4j2.version>2.12.1</log4j2.version>
     <lombok.version>1.18.10</lombok.version>
-    <struts2.version>2.5.20</struts2.version>
-    <jandex.version>2.1.1.Final</jandex.version>
+    <struts2.version>2.5.22</struts2.version>
+    <jandex.version>2.1.2.Final</jandex.version>
     <javaee-api.version>8.0.1</javaee-api.version>
     <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
-    <jandex-maven-plugin.version>1.0.6</jandex-maven-plugin.version>
+    <jandex-maven-plugin.version>1.0.7</jandex-maven-plugin.version>
     <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
   </properties>
-
-  <modules>
-    <module>webapp</module>
-  </modules>
 
   <dependencyManagement>
     <dependencies>
@@ -75,10 +73,27 @@
       <version>${jandex.version}</version>
       <scope>runtime</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-core</artifactId>
+      <version>${struts2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-convention-plugin</artifactId>
+      <version>${struts2.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j2.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
-    <defaultGoal>clean compile jandex:jandex package</defaultGoal>
+    <defaultGoal>clean compile jandex:jandex process-resources package</defaultGoal>
     <finalName>${project.artifactId}</finalName>
 
     <plugins>

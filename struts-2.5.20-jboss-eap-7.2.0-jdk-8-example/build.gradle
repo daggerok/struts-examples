@@ -1,50 +1,59 @@
 buildscript {
   ext {
+    // log4jVersion = "2.8.2"
     // log4jVersion = "2.9.1"
     log4jVersion = "2.12.1"
     javaeeVersion = "8.0.1"
-    strutsVersion = "2.5.20"
-    jandexVersion = "2.1.1.Final"
+    strutsVersion = "2.5.22"
+    jandexVersion = "2.1.2.Final"
   }
 }
 
 plugins {
-  id("com.github.ben-manes.versions") version "0.25.0"
-  id("org.galaxx.gradle.jandex") version "1.0.2" apply false
-  id("io.franzbecker.gradle-lombok") version "3.1.0" apply false
+  id("war")
+  id("java")
+  id("base")
+  id("maven")
+  id("org.galaxx.gradle.jandex") version "1.0.2"
+  id("io.franzbecker.gradle-lombok") version "3.2.0"
+  id("com.github.ben-manes.versions") version "0.27.0"
 }
 
-allprojects {
-  apply plugin: "base"
-  apply plugin: "maven"
+group = "com.github.daggerok"
+version = "0.0.2-SNAPSHOT"
 
-  group = "com.github.daggerok"
-  version = "0.0.1-SNAPSHOT"
-}
-
-subprojects {
-  apply(plugin: "war")
-  apply(plugin: "java")
-
+java {
   sourceCompatibility = JavaVersion.VERSION_1_8
-  // targetCompatibility = JavaVersion.VERSION_1_8
-
-  repositories {
-    mavenCentral()
-  }
-
-  apply(plugin: "io.franzbecker.gradle-lombok")
-
-  lombok {
-    version = "1.18.10"
-  }
-
-  dependencies {
-    runtime("org.jboss:jandex:$jandexVersion")
-    providedCompile("javax:javaee-api:$javaeeVersion")
-    implementation(platform("org.apache.struts:struts2-bom:$strutsVersion"))
-    implementation(platform("org.apache.logging.log4j:log4j-bom:$log4jVersion"))
-  }
+  targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-defaultTasks "clean", "build"
+war {
+  archiveName("${project.name}.war")
+}
+
+repositories {
+  mavenCentral()
+}
+
+lombok {
+  version = "1.18.10"
+}
+
+dependencies {
+  implementation(platform("org.apache.struts:struts2-bom:$strutsVersion"))
+  implementation(platform("org.apache.logging.log4j:log4j-bom:$log4jVersion"))
+
+  implementation("org.apache.struts:struts2-core")
+  implementation("org.apache.struts:struts2-convention-plugin")
+  implementation("org.apache.logging.log4j:log4j-api")
+  implementation("org.apache.logging.log4j:log4j-core")
+
+  runtime("org.jboss:jandex:$jandexVersion")
+  providedCompile("javax:javaee-api:$javaeeVersion")
+}
+
+wrapper {
+  gradleVersion = "5.6.4"
+}
+
+defaultTasks("clean", "processResources", "build")
