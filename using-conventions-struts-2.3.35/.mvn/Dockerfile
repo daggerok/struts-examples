@@ -1,4 +1,4 @@
-FROM daggerok/jboss-eap-7.2:7.2.5-alpine
+FROM daggerok/jboss-eap-6.4:6.4.22-alpine
 HEALTHCHECK --retries=33 \
             --timeout=3s \
             --interval=3s \
