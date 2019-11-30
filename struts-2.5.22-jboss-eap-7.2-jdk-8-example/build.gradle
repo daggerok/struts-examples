@@ -28,7 +28,7 @@ java {
 }
 
 war {
-  archiveName("${project.name}.war")
+    archiveFileName.set("${project.name}.war")
 }
 
 repositories {

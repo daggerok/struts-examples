@@ -35,6 +35,17 @@ before_install:
 jobs:
   include:
     - stage: test
+      name: my-chat docker-compose
+      script:
+        - cd $TRAVIS_BUILD_DIR/my-chat
+        - bash mvnw >/dev/null
+        - bash gradlew >/dev/null
+        - docker-compose up --build --force-recreate --remove-orphans &
+        - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
+        - http :8080/my-chat/
+        - docker-compose down -v
+        - stop_any 8080 80
+    - stage: test
       name: struts-2.5.22-jboss-eap-7.2-jdk-8-example maven docker-compose test
       script:
         - cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./mvnw
@@ -122,18 +133,6 @@ jobs:
       - http :8080/site/
       - http :8080/site/
       - ./mvnw -pl :docker docker-compose:down >/dev/null
-    - stage: test
-      name: my-chat docker-compose
-      script:
-      - cd $TRAVIS_BUILD_DIR/my-chat
-      - bash mvnw >/dev/null
-      - bash gradlew >/dev/null
-      - docker-compose up --build --force-recreate --remove-orphans &
-      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
-      - http :8080/my-chat/
-      - for i in $(docker ps -qa); do docker rm -f -v $i ; done
-      - docker-compose down -v
-      - stop_any 8080 80
     - stage: test
       name: struts-rest-plugin maven jetty run
       script:
