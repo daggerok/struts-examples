@@ -35,30 +35,30 @@ before_install:
 jobs:
   include:
     - stage: test
-      name: struts-2.5.20-jboss-eap-7.2.0-jdk-8-example maven docker-compose test
+      name: struts-2.5.22-jboss-eap-7.2-jdk-8-example maven docker-compose test
       script:
-        - cd $TRAVIS_BUILD_DIR/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example && ./mvnw
-        - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/.mvn/docker-compose.yaml up --build --force-recreate --remove-orphans &
+        - cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./mvnw
+        - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example/.mvn/docker-compose.yaml up --build --force-recreate --remove-orphans &
         - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
         - http :8080/webapp/
         - http :8080/webapp/customers/list
-        - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/.mvn/docker-compose.yaml down -v --rmi local
+        - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example/.mvn/docker-compose.yaml down -v --rmi local
     - stage: test
-      name: struts-2.5.20-jboss-eap-7.2.0-jdk-8-examplemaven versions display
-      script: cd $TRAVIS_BUILD_DIR/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example && ./mvnw versions:display-property-updates -U
+      name: struts-2.5.22-jboss-eap-7.2-jdk-8-examplemaven versions display
+      script: cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./mvnw versions:display-property-updates -U
     - stage: test
-      name: struts-2.5.20-jboss-eap-7.2.0-jdk-8-example gradle docker-compose test
+      name: struts-2.5.22-jboss-eap-7.2-jdk-8-example gradle docker-compose test
       script:
-        - cd $TRAVIS_BUILD_DIR/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example && ./gradlew >/dev/null
-        - cd $TRAVIS_BUILD_DIR/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example && ./gradlew --stop >/dev/null
-        - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/gradle/docker-compose.yaml up --build --force-recreate --remove-orphans &
+        - cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./gradlew >/dev/null
+        - cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./gradlew --stop >/dev/null
+        - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example/gradle/docker-compose.yaml up --build --force-recreate --remove-orphans &
         - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
         - http :8080/webapp/
         - http :8080/webapp/customers/list
-        - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/gradle/docker-compose.yaml down -v --rmi local
+        - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example/gradle/docker-compose.yaml down -v --rmi local
     - stage: test
-      name: struts-2.5.20-jboss-eap-7.2.0-jdk-8-example gradle dependency updates
-      script: cd $TRAVIS_BUILD_DIR/struts-2.5.20-jboss-eap-7.2.0-jdk-8-example && ./gradlew dependencyUpdates -Drevision=release
+      name: struts-2.5.22-jboss-eap-7.2-jdk-8-example gradle dependency updates
+      script: cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./gradlew dependencyUpdates -Drevision=release
     - stage: test
       name: using-conventions-struts-2.3.35 gretty (gradle jetty)
       before_script:

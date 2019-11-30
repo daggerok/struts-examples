@@ -24,7 +24,7 @@ Yes... Old shit technologies... Sometimes we also have to support them =\
 - link:./session-aware/[ONGL + Session]
 - link:./ognl-call-method/[method call from ONGL, if statement]
 - link:./array-map-list-mapping/[ONGL array, list, map mappings, forEach loop]
-- link:./struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/[Struts 2.5.20 JBpss EAP 7.2.0 on Java 8]
+- link:./struts-2.5.22-jboss-eap-7.2-jdk-8-example/[Struts 2.5.20 JBpss EAP 7.2.0 on Java 8]
 - link:./struts-rest-plugin/[Struts REST plugin (don't use that broken buggy shit!)]
 
 == reference

@@ -1,0 +1,27 @@
+[master 7fc9703] rename struts-2.5.20-jboss-eap-7.2.0-jdk-8-example
+ 27 files changed, 14 insertions(+), 1391 deletions(-)
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/.mvn/Dockerfile
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/.mvn/docker-compose.yaml
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/.mvn/wrapper/MavenWrapperDownloader.java
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/.mvn/wrapper/maven-wrapper.jar
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/.mvn/wrapper/maven-wrapper.properties
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/README.adoc
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/build.gradle
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/gradle/Dockerfile
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/gradle/docker-compose.yaml
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/gradle/wrapper/gradle-wrapper.jar
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/gradle/wrapper/gradle-wrapper.properties
+ delete mode 100755 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/gradlew
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/gradlew.bat
+ delete mode 100755 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/mvnw
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/mvnw.cmd
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/pom.xml
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/settings.gradle
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/src/main/java/daggerok/actions/IndexAction.java
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/src/main/java/daggerok/struts/customers/ListAction.java
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/src/main/resources/log4j2.xml
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/src/main/webapp/WEB-INF/content/customers/list.jsp
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/src/main/webapp/WEB-INF/content/index.jsp
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/src/main/webapp/WEB-INF/web.xml
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/src/main/webapp/favicon.ico
+ delete mode 100644 struts-2.5.20-jboss-eap-7.2.0-jdk-8-example/src/main/webapp/styles.css
