@@ -36,14 +36,18 @@ jobs:
       env:
         - SUB_PROJECT="$TRAVIS_BUILD_DIR/start-xml-java7"
       before_script:
-        - cd $SUB_PROJECT && ./mvnw >/dev/null
-        - cd $SUB_PROJECT && ./gradlew >/dev/null
+        - cd $SUB_PROJECT && ./mvnw
+        - cd $SUB_PROJECT && ./gradlew
         - cd $SUB_PROJECT && docker-compose up --build --force-recreate --remove-orphans &
         - wait_healthy_docker_containers 2
       script:
         - http :8080/app/
         - http :8080/app/hello
         - http :8080/app/customers/list
+        #
+        - http :8081/app/
+        - http :8081/app/hello
+        - http :8081/app/customers/list
       after_script:
         - cd $SUB_PROJECT && docker-compose down -v --rmi local
     - stage: test
