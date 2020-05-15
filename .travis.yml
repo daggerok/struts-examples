@@ -70,22 +70,22 @@ jobs:
         - http :8080/webapp/
         - http :8080/webapp/customers/list
         - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example/.mvn/docker-compose.yaml down -v --rmi local
-    - stage: test
-      name: struts-2.5.22-jboss-eap-7.2-jdk-8-examplemaven versions display
-      script: cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./mvnw versions:display-property-updates -U
-    - stage: test
-      name: struts-2.5.22-jboss-eap-7.2-jdk-8-example gradle docker-compose test
-      script:
-        - cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./gradlew >/dev/null
-        - cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./gradlew --stop >/dev/null
-        - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example/gradle/docker-compose.yaml up --build --force-recreate --remove-orphans &
-        - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
-        - http :8080/webapp/
-        - http :8080/webapp/customers/list
-        - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example/gradle/docker-compose.yaml down -v --rmi local
-    - stage: test
-      name: struts-2.5.22-jboss-eap-7.2-jdk-8-example gradle dependency updates
-      script: cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./gradlew dependencyUpdates -Drevision=release
+#    - stage: test
+#      name: struts-2.5.22-jboss-eap-7.2-jdk-8-example maven versions display
+#      script: cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./mvnw versions:display-property-updates -U
+#    - stage: test
+#      name: struts-2.5.22-jboss-eap-7.2-jdk-8-example gradle docker-compose test
+#      script:
+#        - cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./gradlew >/dev/null
+#        - cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./gradlew --stop >/dev/null
+#        - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example/gradle/docker-compose.yaml up --build --force-recreate --remove-orphans &
+#        - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
+#        - http :8080/webapp/
+#        - http :8080/webapp/customers/list
+#        - docker-compose -f $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example/gradle/docker-compose.yaml down -v --rmi local
+#    - stage: test
+#      name: struts-2.5.22-jboss-eap-7.2-jdk-8-example gradle dependency updates
+#      script: cd $TRAVIS_BUILD_DIR/struts-2.5.22-jboss-eap-7.2-jdk-8-example && ./gradlew dependencyUpdates -Drevision=release
     - stage: test
       name: using-conventions-struts-2.3.35 gretty (gradle jetty)
       before_script:
@@ -110,45 +110,45 @@ jobs:
         - http :8080/webapp/customers/list
       after_script:
         - cd $TRAVIS_BUILD_DIR/using-conventions-struts-2.3.35 && ./mvnw -f webapp jetty:stop
-    - stage: test
-      name: using-conventions-struts-2.3.35 docker-compose
-      before_script:
-        - cd $TRAVIS_BUILD_DIR/using-conventions-struts-2.3.35 && ./gradlew
-        - cd $TRAVIS_BUILD_DIR/using-conventions-struts-2.3.35 && ./mvnw
-        #
-        - docker-compose down -v --rmi local
-        - docker-compose build --force-rm --no-cache --pull
-        - docker-compose up &
-        - wait_healthy_docker_containers 2 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
-      script:
-        - http :8080/webapp/
-        - http :8080/webapp/hello
-        - http :8080/webapp/customers/list
-        #
-        - http :8081/webapp/
-        - http :8081/webapp/hello
-        - http :8081/webapp/customers/list
-      after_script:
-        - docker-compose down -v --rmi local
+#    - stage: test
+#      name: using-conventions-struts-2.3.35 docker-compose
+#      before_script:
+#        - cd $TRAVIS_BUILD_DIR/using-conventions-struts-2.3.35 && ./gradlew
+#        - cd $TRAVIS_BUILD_DIR/using-conventions-struts-2.3.35 && ./mvnw
+#        #
+#        - docker-compose down -v --rmi local
+#        - docker-compose build --force-rm --no-cache --pull
+#        - docker-compose up &
+#        - wait_healthy_docker_containers 2 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
+#      script:
+#        - http :8080/webapp/
+#        - http :8080/webapp/hello
+#        - http :8080/webapp/customers/list
+#        #
+#        - http :8081/webapp/
+#        - http :8081/webapp/hello
+#        - http :8081/webapp/customers/list
+#      after_script:
+#        - docker-compose down -v --rmi local
     - stage: test
       name: using-conventions-struts-2.3.35 gradle updates
       script: cd $TRAVIS_BUILD_DIR/using-conventions-struts-2.3.35 && ./gradlew dependencyUpdates -Drevision=release
     - stage: test
       name: using-conventions-struts-2.3.35 maven updates
       script: cd $TRAVIS_BUILD_DIR/using-conventions-struts-2.3.35 && ./mvnw versions:display-property-updates
-    - stage: test
-      name: struts2dolist test
-      script:
-      - cd $TRAVIS_BUILD_DIR/struts2dolist/
-      - ./mvnw >/dev/null
-      - for i in $(docker ps -aq) ; do docker rm -f -v $i ; done
-      - ./mvnw -pl :docker docker-compose:up
-      - docker logs -f -t docker_site_1 &
-      - wait_healthy_docker_containers 1
-      - http :8080/site/
-      - http :8080/site/
-      - http :8080/site/
-      - ./mvnw -pl :docker docker-compose:down >/dev/null
+#    - stage: test
+#      name: struts2dolist test
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/struts2dolist/
+#      - ./mvnw >/dev/null
+#      - for i in $(docker ps -aq) ; do docker rm -f -v $i ; done
+#      - ./mvnw -pl :docker docker-compose:up
+#      - docker logs -f -t docker_site_1 &
+#      - wait_healthy_docker_containers 1
+#      - http :8080/site/
+#      - http :8080/site/
+#      - http :8080/site/
+#      - ./mvnw -pl :docker docker-compose:down >/dev/null
     - stage: test
       name: struts-rest-plugin maven jetty run
       script:
@@ -165,18 +165,18 @@ jobs:
       #- http :8080/user.xml
       #- http :8080/user.json
       #- stop_any 8080 80
-    - stage: test
-      name: ognl-cdi-tracking-data docker-compose
-      script:
-      - cd $TRAVIS_BUILD_DIR/ognl-cdi-tracking-data
-      - bash mvnw >/dev/null
-      - bash gradlew >/dev/null
-      - docker-compose build --force-rm --no-cache --pull
-      - docker-compose up --force-recreate --remove-orphans &
-      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
-      - http :8080/webapp/
-      - docker-compose down -v
-      - stop_any 8080 80
+#    - stage: test
+#      name: ognl-cdi-tracking-data docker-compose
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/ognl-cdi-tracking-data
+#      - bash mvnw >/dev/null
+#      - bash gradlew >/dev/null
+#      - docker-compose build --force-rm --no-cache --pull
+#      - docker-compose up --force-recreate --remove-orphans &
+#      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
+#      - http :8080/webapp/
+#      - docker-compose down -v
+#      - stop_any 8080 80
     - stage: test
       name: ognl-call-method maven
       script:
@@ -185,26 +185,26 @@ jobs:
       - wait_for 8080
       - http :8080/webapp/
       - stop_any 8080
-    - stage: test
-      name: ognl-call-method docker-compose
-      script:
-      - cd $TRAVIS_BUILD_DIR/ognl-call-method
-      - bash mvnw -pl webapp clean package
-      - bash gradlew clean build
-      - docker-compose build --force-rm --no-cache --pull
-      - docker-compose up --force-recreate --remove-orphans &
-      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
-      - http :8080/webapp/
-      - docker-compose down -v
-      - stop_any 8080 80
-    - stage: test
-      name: array-map-list-mapping maven
-      script:
-      - cd $TRAVIS_BUILD_DIR/array-map-list-mapping
-      - bash mvnw -pl webapp clean package jetty:run &
-      - wait_for 8080
-      - http :8080/webapp/
-      - stop_any 8080
+#    - stage: test
+#      name: ognl-call-method docker-compose
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/ognl-call-method
+#      - bash mvnw -pl webapp clean package
+#      - bash gradlew clean build
+#      - docker-compose build --force-rm --no-cache --pull
+#      - docker-compose up --force-recreate --remove-orphans &
+#      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
+#      - http :8080/webapp/
+#      - docker-compose down -v
+#      - stop_any 8080 80
+#    - stage: test
+#      name: array-map-list-mapping maven
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/array-map-list-mapping
+#      - bash mvnw -pl webapp clean package jetty:run &
+#      - wait_for 8080
+#      - http :8080/webapp/
+#      - stop_any 8080
     - stage: test
       name: array-map-list-mapping docker-compose
       script:
@@ -225,26 +225,26 @@ jobs:
       - wait_for 8080
       - http :8080/webapp/
       - stop_any 8080
-    - stage: test
-      name: session-aware docker-compose
-      script:
-      - cd $TRAVIS_BUILD_DIR/session-aware
-      - bash mvnw -pl webapp clean package
-      - bash gradlew clean build
-      - docker-compose build --force-rm --no-cache --pull
-      - docker-compose up --force-recreate --remove-orphans &
-      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
-      - http :8080/webapp/
-      - docker-compose down -v
-      - stop_any 8080 80
-    - stage: test
-      name: ognl-tracking-data maven
-      script:
-      - cd $TRAVIS_BUILD_DIR/ognl-tracking-data
-      - bash mvnw -pl webapp clean package jetty:run &
-      - wait_for 8080
-      - http :8080/webapp/
-      - stop_any 8080
+#    - stage: test
+#      name: session-aware docker-compose
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/session-aware
+#      - bash mvnw -pl webapp clean package
+#      - bash gradlew clean build
+#      - docker-compose build --force-rm --no-cache --pull
+#      - docker-compose up --force-recreate --remove-orphans &
+#      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
+#      - http :8080/webapp/
+#      - docker-compose down -v
+#      - stop_any 8080 80
+#    - stage: test
+#      name: ognl-tracking-data maven
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/ognl-tracking-data
+#      - bash mvnw -pl webapp clean package jetty:run &
+#      - wait_for 8080
+#      - http :8080/webapp/
+#      - stop_any 8080
     - stage: test
       name: ognl-tracking-data docker-compose
       script:
@@ -265,26 +265,26 @@ jobs:
       - wait_for 8080
       - http :8080/webapp/
       - stop_any 8080
-    - stage: test
-      name: struts2-freemarker-out-of-the-box docker-compose
-      script:
-      - cd $TRAVIS_BUILD_DIR/struts2-freemarker-out-of-the-box
-      - bash mvnw clean package
-      - bash gradlew clean build
-      - docker-compose build --force-rm --no-cache --pull
-      - docker-compose up --force-recreate --remove-orphans &
-      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
-      - http :8080/webapp/
-      - docker-compose down -v
-      - stop_any 8080 80
-    - stage: test
-      name: struts2-velocity maven
-      script:
-      - cd $TRAVIS_BUILD_DIR/struts2-velocity
-      - bash mvnw -pl webapp clean package jetty:run &
-      - wait_for 8080
-      - http :8080/webapp/
-      - stop_any 8080
+#    - stage: test
+#      name: struts2-freemarker-out-of-the-box docker-compose
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/struts2-freemarker-out-of-the-box
+#      - bash mvnw clean package
+#      - bash gradlew clean build
+#      - docker-compose build --force-rm --no-cache --pull
+#      - docker-compose up --force-recreate --remove-orphans &
+#      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
+#      - http :8080/webapp/
+#      - docker-compose down -v
+#      - stop_any 8080 80
+#    - stage: test
+#      name: struts2-velocity maven
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/struts2-velocity
+#      - bash mvnw -pl webapp clean package jetty:run &
+#      - wait_for 8080
+#      - http :8080/webapp/
+#      - stop_any 8080
     - stage: test
       name: struts2-velocity docker-compose
       script:
@@ -308,21 +308,21 @@ jobs:
       - http :8080/webapp/second-index/
       - http :8080/webapp/blah/blah-blah
       - stop_any 8080 80
-    - stage: test
-      name: result-conventions-and-fallback docker-compose
-      script:
-      - cd $TRAVIS_BUILD_DIR/result-conventions-and-fallback
-      - bash mvnw clean package
-      - bash gradlew clean build
-      - docker-compose build --force-rm --no-cache --pull
-      - docker-compose up --force-recreate --remove-orphans &
-      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
-      - http :8080/webapp/
-      - http :8080/webapp/second-index
-      - http :8080/webapp/second-index/
-      - http :8080/webapp/blah/blah-blah
-      - docker-compose down -v
-      - stop_any 8080 80
+#    - stage: test
+#      name: result-conventions-and-fallback docker-compose
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/result-conventions-and-fallback
+#      - bash mvnw clean package
+#      - bash gradlew clean build
+#      - docker-compose build --force-rm --no-cache --pull
+#      - docker-compose up --force-recreate --remove-orphans &
+#      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
+#      - http :8080/webapp/
+#      - http :8080/webapp/second-index
+#      - http :8080/webapp/second-index/
+#      - http :8080/webapp/blah/blah-blah
+#      - docker-compose down -v
+#      - stop_any 8080 80
     - stage: test
       name: handle-user-date maven jetty
       script:
@@ -333,34 +333,34 @@ jobs:
       - http :8080/webapp/submit-data.action\?newData=two
       - http :8080/webapp/find-all
       - stop_any 8080 80
-    - stage: test
-      name: handle-user-date docker-compose
-      script:
-      - cd $TRAVIS_BUILD_DIR/handle-user-date
-      - bash mvnw clean package
-      - bash gradlew clean build
-      - docker-compose build --force-rm --no-cache --pull
-      - docker-compose up --force-recreate --remove-orphans &
-      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
-      - http :8080/webapp/find-all
-      - http :8080/webapp/submit-data.action\?newData=three
-      - http :8080/webapp/find-all
-      - docker-compose down -v
-      - stop_any 8080 80
-    - stage: test
-      name: using-conventions
-      script:
-      - cd $TRAVIS_BUILD_DIR/using-conventions
-      - bash gradlew clean build
-      - bash mvnw clean package
-      - docker-compose build --force-rm --no-cache --pull
-      - docker-compose up --force-recreate --remove-orphans &
-      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
-      - http :8080/webapp/
-      - http :8080/webapp/hello
-      - http :8080/webapp/customers/list
-      - docker-compose down -v
-      - stop_any 8080 80
+#    - stage: test
+#      name: handle-user-date docker-compose
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/handle-user-date
+#      - bash mvnw clean package
+#      - bash gradlew clean build
+#      - docker-compose build --force-rm --no-cache --pull
+#      - docker-compose up --force-recreate --remove-orphans &
+#      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
+#      - http :8080/webapp/find-all
+#      - http :8080/webapp/submit-data.action\?newData=three
+#      - http :8080/webapp/find-all
+#      - docker-compose down -v
+#      - stop_any 8080 80
+#    - stage: test
+#      name: using-conventions
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/using-conventions
+#      - bash gradlew clean build
+#      - bash mvnw clean package
+#      - docker-compose build --force-rm --no-cache --pull
+#      - docker-compose up --force-recreate --remove-orphans &
+#      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
+#      - http :8080/webapp/
+#      - http :8080/webapp/hello
+#      - http :8080/webapp/customers/list
+#      - docker-compose down -v
+#      - stop_any 8080 80
     - stage: test
       name: render-property-from-action maven jetty plugin
       script:
@@ -370,19 +370,19 @@ jobs:
       - http :8080/webapp/
       - http :8080/webapp/hello-action
       - stop_any 8080 80
-    - stage: test
-      name: render-property-from-action docker-compose
-      script:
-      - cd $TRAVIS_BUILD_DIR/render-property-from-action
-      - bash gradlew >/dev/null
-      - bash mvnw >/dev/null
-      - docker-compose build --force-rm --no-cache --pull
-      - docker-compose up --force-recreate --remove-orphans &
-      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
-      - http :8080/webapp/
-      - http :8080/webapp/hello-action
-      - docker-compose down -v
-      - stop_any 8080 80
+#    - stage: test
+#      name: render-property-from-action docker-compose
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/render-property-from-action
+#      - bash gradlew >/dev/null
+#      - bash mvnw >/dev/null
+#      - docker-compose build --force-rm --no-cache --pull
+#      - docker-compose up --force-recreate --remove-orphans &
+#      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
+#      - http :8080/webapp/
+#      - http :8080/webapp/hello-action
+#      - docker-compose down -v
+#      - stop_any 8080 80
     - stage: test
       name: message-source-files
       script:
@@ -416,19 +416,19 @@ jobs:
       - http :8080/webapp/
       - http :8080/webapp/customers/list
       - stop_any 8080 80
-    - stage: test
-      name: starter docker-compose
-      script:
-      - cd $TRAVIS_BUILD_DIR/starter
-      - bash gradlew clean build >/dev/null
-      - bash mvnw clean package >/dev/null
-      - docker-compose build --force-rm --no-cache --pull
-      - docker-compose up --force-recreate --remove-orphans &
-      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
-      - http :8080/webapp/
-      - http :8080/webapp/customers/list
-      - docker-compose down -v
-      - stop_any 8080 80
+#    - stage: test
+#      name: starter docker-compose
+#      script:
+#      - cd $TRAVIS_BUILD_DIR/starter
+#      - bash gradlew clean build >/dev/null
+#      - bash mvnw clean package >/dev/null
+#      - docker-compose build --force-rm --no-cache --pull
+#      - docker-compose up --force-recreate --remove-orphans &
+#      - wait_healthy_docker_containers 1 # https://github.com/daggerok/bash-functions/blob/master/main.bash#L131
+#      - http :8080/webapp/
+#      - http :8080/webapp/customers/list
+#      - docker-compose down -v
+#      - stop_any 8080 80
 before_cache:
 - for item in $(find ~/.gradle -name "*.lock") ;
     do sudo rm -rfv $item ;
