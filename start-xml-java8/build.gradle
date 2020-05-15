@@ -1,0 +1,73 @@
+buildscript {
+  ext {
+    strutsVersion = "2.3.35"
+    log4jVersion = "2.8.2"
+    asmVersion = "5.1"
+  }
+}
+
+plugins {
+  id("war")
+  id("base")
+  id("idea")
+  id("java")
+  id("maven")
+  id("org.gretty") version "2.3.1"
+  id("com.github.ben-manes.versions") version "0.28.0"
+  id("io.franzbecker.gradle-lombok") version "4.0.0" apply false
+  id("io.spring.dependency-management") version "1.0.9.RELEASE" apply false
+}
+
+group = "daggerok"
+version = "0.0.3"
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+  mavenCentral()
+  maven { url("http://repo.maven.apache.org/maven2") }
+  jcenter()
+}
+
+apply(plugin: "io.franzbecker.gradle-lombok")
+lombok.version = "1.18.12"
+
+apply(plugin: "io.spring.dependency-management")
+
+dependencyManagement {
+  imports {
+    mavenBom("org.apache.struts:struts2-bom:$strutsVersion")
+    mavenBom("org.apache.logging.log4j:log4j-bom:$log4jVersion")
+  }
+}
+
+dependencies {
+  compileOnly("javax:javaee-api:8.0.1")
+  implementation("org.apache.struts:struts2-core:$strutsVersion",
+      "org.apache.struts:struts2-convention-plugin:$strutsVersion",
+      "org.apache.logging.log4j:log4j-core:$log4jVersion",
+      "org.apache.logging.log4j:log4j-api:$log4jVersion"/*,
+                   "org.apache.struts.xwork:xwork-core:$strutsVersion",
+                   "org.ow2.asm:asm-commons:$asmVersion",
+                   "org.ow2.asm:asm:$asmVersion"*/)
+}
+
+wrapper {
+  gradleVersion = "5.6.4"
+}
+
+gretty { // https://gretty-gradle-plugin.github.io/gretty-doc/Gretty-configuration.html
+  servletContainer = "jetty7"
+  contextPath = "/app/"
+}
+
+// task('startWebapp', type: org.akhikhl.gretty.AppStartTask) {
+//     interactive = false
+// }
+
+war {
+  archiveFileName.set("${project.name}.war")
+}
+
+defaultTasks("clean", "processResources", "build")
