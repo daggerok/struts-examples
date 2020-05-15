@@ -5,7 +5,7 @@ git:
   depth: false
 jdk: openjdk8
 node_js: lts/*
-python: 3.7
+python: 3.8
 services: docker
 os: linux
 arch: amd64
@@ -13,7 +13,8 @@ addons:
   apt:
     update: true
     packages:
-      - python3-pip
+      - docker-ce
+      - httpie
       - sudo
       - lsof
       - curl
@@ -26,14 +27,25 @@ before_install:
       curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash > ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
     fi
     source ${HOME}/.local/daggerok/bash-functions/master/main.bash ;
-  - stop_any 80 5432 8080
-  - export PATH=$HOME/.local/bin:$PATH
-  - pip3 install --user --upgrade pip setuptools
-  - pip install --user --upgrade docker-compose httpie
-  - docker-compose version
   - stop_any 80 8001 8002 8080 5432
+  - docker-compose version
 jobs:
   include:
+    - stage: test
+      name: start-xml-java7
+      env:
+        - SUB_PROJECT="$TRAVIS_BUILD_DIR/start-xml-java7"
+      before_script:
+        - cd $SUB_PROJECT && ./mvnw >/dev/null
+        - cd $SUB_PROJECT && ./gradlew >/dev/null
+        - cd $SUB_PROJECT && docker-compose up --build --force-recreate --remove-orphans &
+        - wait_healthy_docker_containers 2
+      script:
+        - http :8080/app/
+        - http :8080/app/hello
+        - http :8080/app/customers/list
+      after_script:
+        - cd $SUB_PROJECT && docker-compose down -v --rmi local
     - stage: test
       name: my-chat docker-compose
       script:

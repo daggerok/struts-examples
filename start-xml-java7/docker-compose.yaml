@@ -1,0 +1,16 @@
+version: "2.1"
+networks:
+  backing-services:
+services:
+  gradle:
+    build:
+      context: .
+      dockerfile: gradle/Dockerfile
+    networks: [backing-services]
+    ports: ["8081:8080"]
+  maven:
+    build:
+      context: .
+      dockerfile: .mvn/Dockerfile
+    networks: [backing-services]
+    ports: ["8080:8080"]
