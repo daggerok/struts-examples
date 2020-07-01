@@ -15,7 +15,7 @@
 
     <vavr.version>0.10.2</vavr.version>
     <cdi-api.version>2.0</cdi-api.version>
-    <log4j2.version>2.12.1</log4j2.version>
+    <log4j2.version>2.13.3</log4j2.version>
     <lombok.version>1.18.10</lombok.version>
     <struts2.version>2.5.22</struts2.version>
     <javaee-api.version>8.0.1</javaee-api.version>
