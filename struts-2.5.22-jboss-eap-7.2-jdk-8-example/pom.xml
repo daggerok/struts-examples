@@ -24,7 +24,7 @@
     <!--<log4j2.version>2.9.1</log4j2.version>-->
     <log4j2.version>2.13.3</log4j2.version>
     <lombok.version>1.18.10</lombok.version>
-    <struts2.version>2.5.22</struts2.version>
+    <struts2.version>2.5.30</struts2.version>
     <jandex.version>2.1.2.Final</jandex.version>
     <javaee-api.version>8.0.1</javaee-api.version>
     <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
